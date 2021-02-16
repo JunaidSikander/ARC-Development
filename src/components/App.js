@@ -14,7 +14,8 @@ function App() {
                     <Route exact path="/" component={() => <div>Home</div>}/>
                     <Route path="/services" component={() => <div>Services</div>}/>
                     <Route path="/customsoftware" component={() => <div>Custom Software</div>}/>
-                    <Route path="/mobileapp" component={() => <div>Mobile App</div>}/>
+                    <Route path="/mobileapps" component={() => <div>Mobile App</div>}/>
+                    <Route path="/websites" component={() => <div>Websites</div>}/>
                     <Route path="/revolution" component={() => <div>Revolution</div>}/>
                     <Route path="/about" component={() => <div>About us</div>}/>
                     <Route path="/contact" component={() => <div>Contact us</div>}/>
