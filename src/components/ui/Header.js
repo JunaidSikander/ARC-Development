@@ -1,6 +1,8 @@
 import React, {cloneElement, useEffect, useState} from 'react';
 import {Link} from "react-router-dom";
 // Material UI Components
+import {makeStyles} from "@material-ui/styles";
+import { useTheme } from '@material-ui/core/styles'
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Tabs from "@material-ui/core/Tabs";
@@ -9,7 +11,7 @@ import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 import Button from "@material-ui/core/Button";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
-import {makeStyles} from "@material-ui/styles";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 //Components
 import logo from '../../assets/logo.svg'
 
@@ -30,10 +32,22 @@ function ElevationScroll(props) {
 const useStyles = makeStyles(theme => ({
     toolbarMargin: {
         ...theme.mixins.toolbar,
-        marginBottom: '2em'
+        marginBottom: '1em',
+        [theme.breakpoints.down('md')]: {
+            marginBottom: '0.5em',
+        },
+        [theme.breakpoints.down('xs')]: {
+            marginBottom: '0.1em',
+        },
     },
     logo: {
-        height: '6em'
+        height: '6em',
+        [theme.breakpoints.down('md')]: {
+            height: '5em',
+        },
+        [theme.breakpoints.down('xs')]: {
+            height: '3.5em',
+        },
     },
     logoContainer: {
         padding: 0,
@@ -72,10 +86,13 @@ const useStyles = makeStyles(theme => ({
 
 export default function (props) {
     const classes = useStyles();
+    const theme = useTheme();
+
+    const mediunScreen = useMediaQuery( theme.breakpoints.down('md'));
 
     const [value, setValue] = useState(0);
     const [anchorEl, setAnchorEl] = useState(null);
-    const [open, setOpen] = useState(false);
+    const [openMenu, setOpenMenu] = useState(false);
     const [selectedIndex, setSelectedIndex] = useState(0);
 
     const menuOptions = [
@@ -85,24 +102,24 @@ export default function (props) {
         {name: "Website Development", link: "/websites"}
     ];
 
-    const handleChange = (e, value) => {
-        setValue(value);
+    const handleChange = (e, newValue) => {
+        setValue(newValue);
     };
 
     const handleClick = (e) => {
         setAnchorEl(e.currentTarget);
-        setOpen(true);
+        setOpenMenu(true);
     };
 
     const handleMenuItemClick = (e, i) => {
         setAnchorEl(null);
-        setOpen(false);
+        setOpenMenu(false);
         setSelectedIndex(i);
     };
 
     const handleClose = (e) => {
         setAnchorEl(null);
-        setOpen(false);
+        setOpenMenu(false);
     };
 
     useEffect(() => {
@@ -139,6 +156,52 @@ export default function (props) {
         }
     }, [value, selectedIndex]);
 
+    const tabs = (
+        <>
+            <Tabs
+                className={classes.tabContainer}
+                value={value}
+                onChange={handleChange}
+                indicatorColor="primary">
+                <Tab className={classes.tab} component={Link} to="/" label="Home"/>
+                <Tab
+                    aria-owns={anchorEl ? "simple-menu" : undefined}
+                    aria-haspopup={anchorEl ? "true" : undefined}
+                    className={classes.tab}
+                    component={Link}
+                    onMouseOver={event => handleClick(event)}
+                    to="/services"
+                    label="Services"/>
+                <Tab className={classes.tab} component={Link} to="/revolution" label="The Revolution"/>
+                <Tab className={classes.tab} component={Link} to="/about" label="About us"/>
+                <Tab className={classes.tab} component={Link} to="/contact" label="Contact us"/>
+            </Tabs>
+            <Button className={classes.button} component={Link} to="/estimate" variant="contained"
+                    color="secondary">
+                Free Estimate
+            </Button>
+            <Menu
+                id="simple-menu"
+                classes={{ paper: classes.menu }}
+                anchorEl={anchorEl}
+                open={openMenu}
+                onClose={handleClose}
+                MenuListProps={{onMouseLeave: handleClose}}
+                elevation={0}>
+
+                {menuOptions.map( (option, i) => (
+                    <MenuItem key={i}
+                              classes={{ root: classes.menuItem}}
+                              component={Link}
+                              onClick={(e) => {handleMenuItemClick(e,i); setValue(1)}}
+                              to={option.link}
+                              selected={i === selectedIndex && value === 1}>
+                        {option.name} </MenuItem>
+                ))}
+            </Menu>
+        </>
+    );
+
     return (
         <>
             <ElevationScroll>
@@ -152,47 +215,7 @@ export default function (props) {
                             onClick={() => setValue(0)}>
                             <img alt="company logo" className={classes.logo} src={logo}/>
                         </Button>
-                        <Tabs
-                            className={classes.tabContainer}
-                            value={value}
-                            onChange={handleChange}
-                            indicatorColor="primary">
-                            <Tab className={classes.tab} component={Link} to="/" label="Home"/>
-                            <Tab
-                                aria-owns={anchorEl ? "simple-menu" : undefined}
-                                aria-haspopup={anchorEl ? "true" : undefined}
-                                className={classes.tab}
-                                component={Link}
-                                onMouseOver={event => handleClick(event)}
-                                to="/services"
-                                label="Services"/>
-                            <Tab className={classes.tab} component={Link} to="/revolution" label="The Revolution"/>
-                            <Tab className={classes.tab} component={Link} to="/about" label="About us"/>
-                            <Tab className={classes.tab} component={Link} to="/contact" label="Contact us"/>
-                        </Tabs>
-                        <Button className={classes.button} component={Link} to="/estimate" variant="contained"
-                                color="secondary">
-                            Free Estimate
-                        </Button>
-                        <Menu
-                            id="simple-menu"
-                            classes={{ paper: classes.menu }}
-                            anchorEl={anchorEl}
-                            open={open}
-                            onClose={handleClose}
-                            MenuListProps={{onMouseLeave: handleClose}}
-                            elevation={0}>
-
-                            {menuOptions.map( (option, i) => (
-                                <MenuItem key={i}
-                                          classes={{ root: classes.menuItem}}
-                                          component={Link}
-                                          onClick={(e) => {handleMenuItemClick(e,i); setValue(1)}}
-                                          to={option.link}
-                                          selected={i === selectedIndex && value === 1}>
-                                    {option.name} </MenuItem>
-                            ))}
-                        </Menu>
+                        { mediunScreen ? null : tabs }
                     </Toolbar>
                 </AppBar>
             </ElevationScroll>
