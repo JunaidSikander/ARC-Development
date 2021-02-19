@@ -36,6 +36,19 @@ const useStyles = makeStyles(theme => ({
     },
     gridItem: {
         margin: '3em'
+    },
+    icon: {
+        height: '4em',
+        width: '4em',
+        [theme.breakpoints.down('xs')]: {
+            height: '2.5em',
+            width: '2.5em',
+        }
+    },
+    socialContainer: {
+        position: 'absolute',
+        marginTop: '-6em',
+        right: "0.5rem"
     }
 }));
 
@@ -53,6 +66,12 @@ const Footer = ({value, setValue, selectedIndex, setSelectedIndex}) => {
         [{name: 'The Revolution', link: "/revolution", activeIndex: 2 }, { name: 'Vision' }, { name: 'Technology' }, { name: 'Process' } ],
         [{name: 'About Us', link: "/about", activeIndex: 3 }, { name: 'History' }, { name: 'Team'}],
         [{name: 'Contact Us', link: "/contact", activeIndex: 4 }]
+    ];
+
+    const images = [
+        {name: 'facebook.svg', href: 'https://www.facebook.com/', rel: 'noopener noreferrer', target: '_blank', alt: 'facebook logo'},
+        {name: 'instagram.svg', href: 'https://www.instagram.com', rel: 'noopener noreferrer', target: '_blank', alt: 'instagram logo'},
+        {name: 'twitter.svg', href: 'https://twitter.com/', rel: 'noopener noreferrer', target: '_blank', alt: 'twitter logo'},
     ];
 
 
@@ -79,6 +98,17 @@ const Footer = ({value, setValue, selectedIndex, setSelectedIndex}) => {
             </Grid>
         </Hidden>
         <img className={classes.adorment} alt="black decorative slash" src={footerAdorment}/>
+        <Grid container justify="flex-end" spacing={2} className={classes.socialContainer}>
+            {images.map( image =>
+                <Grid item
+                      component={"a"}
+                      href={image.href}
+                      rel={image.rel}
+                      target={image.target}>
+                    <img alt={image.alt} src={`assets/${image.name}`} className={classes.icon}/>
+                </Grid>
+            )}
+        </Grid>
     </footer>
 };
 
