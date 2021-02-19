@@ -119,16 +119,14 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-export default function (props) {
+export default function ({value, setValue, selectedIndex, setSelectedIndex}) {
     const classes = useStyles();
     const theme = useTheme();
     const mediunScreen = useMediaQuery( theme.breakpoints.down('md'));
 
-    const [value, setValue] = useState(0);
     const [anchorEl, setAnchorEl] = useState(null);
     const [openMenu, setOpenMenu] = useState(false);
     const [openDrawer, setOpenDrawer] = useState(false);
-    const [selectedIndex, setSelectedIndex] = useState(0);
 
     const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
 

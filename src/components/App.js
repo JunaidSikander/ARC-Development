@@ -1,17 +1,24 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {ThemeProvider} from "@material-ui/styles";
 // Components
 import theme from './ui/Theme'
 import Header from "./ui/Header";
+import Footer from "./ui/Footer";
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 
 function App() {
+    const [value, setValue] = useState(0);
+    const [selectedIndex, setSelectedIndex] = useState(0);
+
     return (
         <ThemeProvider theme={theme}>
             <Router>
-                <Header/>
+                <Header value={value}
+                        setValue={setValue}
+                        selectedIndex={selectedIndex}
+                        setSelectedIndex={setSelectedIndex}/>
                 <Switch>
-                    <Route exact path="/" component={() => <div>Home</div>}/>
+                    <Route exact path="/" component={() => <div style={{height: '80vh'}}>Home</div>}/>
                     <Route path="/services" component={() => <div>Services</div>}/>
                     <Route path="/customsoftware" component={() => <div>Custom Software</div>}/>
                     <Route path="/mobileapps" component={() => <div>Mobile App</div>}/>
@@ -21,6 +28,10 @@ function App() {
                     <Route path="/contact" component={() => <div>Contact us</div>}/>
                     <Route path="/estimate" component={() => <div>Fee Estimate</div>}/>
                 </Switch>
+                <Footer value={value}
+                        setValue={setValue}
+                        selectedIndex={selectedIndex}
+                        setSelectedIndex={setSelectedIndex}/>
             </Router>
         </ThemeProvider>
     );
