@@ -18,8 +18,6 @@ import MenuIcon from '@material-ui/icons/Menu';
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
-//Components
-import logo from '../../assets/logo.svg';
 
 function ElevationScroll(props) {
     const {children, window} = props;
@@ -277,7 +275,7 @@ export default function ({value, setValue, selectedIndex, setSelectedIndex}) {
                             component={Link}
                             to="/"
                             onClick={() => setValue(0)}>
-                            <img alt="company logo" className={classes.logo} src={logo}/>
+                            <img alt="company logo" className={classes.logo} src="/assets/logo.svg"/>
                         </Button>
                         { mediunScreen ? drawer : tabs }
                     </Toolbar>
