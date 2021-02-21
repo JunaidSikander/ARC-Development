@@ -128,7 +128,7 @@ const LandingPage = () => {
                     </Grid>
                 </Grid>
             </Grid>
-            <Grid item> { /*----- Service Block -----*/}
+            <Grid item> { /*----- Custom Software Block -----*/}
                 <Grid container justify={matchesSM ? "center" : undefined} className={classes.serviceContainer}>
                     <Grid item
                           style={{
@@ -152,6 +152,30 @@ const LandingPage = () => {
                     </Grid>
                     <Grid item>
                         <img className={classes.icon} alt='custom software icon' src='/assets/customSoftwareIcon.svg'/>
+                    </Grid>
+                </Grid>
+            </Grid>
+            <Grid item> { /*----- iOS/Android  Block -----*/}
+                <Grid container justify={matchesSM ? "center" : 'flex-end'} className={classes.serviceContainer}>
+                    <Grid item
+                          style={{ textAlign: matchesSM ? 'center' : undefined }}>
+                        <Typography variant='h4'>
+                            iOS/Android App Development
+                        </Typography>
+                        <Typography variant='subtitle1' className={classes.subtitle}>
+                            Extend Functionality. Extend Access. Increase Engagement.
+                        </Typography>
+                        <Typography variant='subtitle1'>
+                            Integrate your web experience or create a standalone app
+                            { matchesSM ? null : <br/> } with either mobile platform.
+                        </Typography>
+                        <Button variant='outlined' className={classes.learnButton}>
+                            <span style={{marginRight: 10}}> Learn More </span>
+                            <ButtonArrow width={10} height={10} fill={theme.palette.common.blue}/>
+                        </Button>
+                    </Grid>
+                    <Grid item style={{ marginRight: matchesSM ? 0 : '5em', }}>
+                        <img className={classes.icon} alt='mobile phone icon' src='/assets/mobileIcon.svg'/>
                     </Grid>
                 </Grid>
             </Grid>
