@@ -52,54 +52,79 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const Footer = ({value, setValue, selectedIndex, setSelectedIndex}) => {
+const Footer = ({setValue, setSelectedIndex}) => {
     const classes = useStyles();
 
     const footerMenus = [
-        [{name: 'Home', link: '/', activeIndex: 0 }],
+        [{name: 'Home', link: '/', activeIndex: 0}],
         [
-            {name: "Services", link: "/services", activeIndex: 1,selectedIndex: 0},
+            {name: "Services", link: "/services", activeIndex: 1, selectedIndex: 0},
             {name: "Custom Software Development", link: "/customsoftware", activeIndex: 1, selectedIndex: 1},
-            {name: "Mobile App Development", link: "/mobileapps", activeIndex: 1, selectedIndex: 2},
+            {name: "iOS/Android App Development", link: "/mobileapps", activeIndex: 1, selectedIndex: 2},
             {name: "Website Development", link: "/websites", activeIndex: 1, selectedIndex: 3}
-            ],
-        [{name: 'The Revolution', link: "/revolution", activeIndex: 2 }, { name: 'Vision' }, { name: 'Technology' }, { name: 'Process' } ],
-        [{name: 'About Us', link: "/about", activeIndex: 3 }, { name: 'History' }, { name: 'Team'}],
-        [{name: 'Contact Us', link: "/contact", activeIndex: 4 }]
+        ],
+        [{
+            name: 'The Revolution',
+            link: "/revolution",
+            activeIndex: 2
+        }, {name: 'Vision'}, {name: 'Technology'}, {name: 'Process'}],
+        [{name: 'About Us', link: "/about", activeIndex: 3}, {name: 'History'}, {name: 'Team'}],
+        [{name: 'Contact Us', link: "/contact", activeIndex: 4}]
     ];
 
     const images = [
-        {name: 'facebook.svg', href: 'https://www.facebook.com/', rel: 'noopener noreferrer', target: '_blank', alt: 'facebook logo'},
-        {name: 'instagram.svg', href: 'https://www.instagram.com', rel: 'noopener noreferrer', target: '_blank', alt: 'instagram logo'},
-        {name: 'twitter.svg', href: 'https://twitter.com/', rel: 'noopener noreferrer', target: '_blank', alt: 'twitter logo'},
+        {
+            name: 'facebook.svg',
+            href: 'https://www.facebook.com/',
+            rel: 'noopener noreferrer',
+            target: '_blank',
+            alt: 'facebook logo'
+        },
+        {
+            name: 'instagram.svg',
+            href: 'https://www.instagram.com',
+            rel: 'noopener noreferrer',
+            target: '_blank',
+            alt: 'instagram logo'
+        },
+        {
+            name: 'twitter.svg',
+            href: 'https://twitter.com/',
+            rel: 'noopener noreferrer',
+            target: '_blank',
+            alt: 'twitter logo'
+        },
     ];
 
 
     return <footer className={classes.footer}>
         <Hidden mdDown>
             <Grid container justify="center" className={classes.mainContainer}>
-                { footerMenus.map((menu, index) => (
+                {footerMenus.map((menu, index) => (
                     <Grid key={`${menu}${index}`} item className={classes.gridItem}>
                         <Grid container direction="column" spacing={2}>
-                            { menu.map((item, index) => (
+                            {menu.map((item, index) => (
                                 <Grid item
                                       className={classes.link}
                                       key={`${item}${index}`}
                                       component={Link}
                                       to={item.link}
-                                      onClick={() => { setValue(item.activeIndex); setSelectedIndex(item.selectedIndex);   }}
+                                      onClick={() => {
+                                          setValue(item.activeIndex);
+                                          setSelectedIndex(item.selectedIndex);
+                                      }}
                                 >
                                     {item.name}
                                 </Grid>
-                            )) }
+                            ))}
                         </Grid>
                     </Grid>
-                )) }
+                ))}
             </Grid>
         </Hidden>
         <img className={classes.adorment} alt="black decorative slash" src={footerAdorment}/>
         <Grid container justify="flex-end" spacing={2} className={classes.socialContainer}>
-            {images.map( (image, i) =>
+            {images.map((image, i) =>
                 <Grid item
                       key={`${image.name}${i}`}
                       component={"a"}
