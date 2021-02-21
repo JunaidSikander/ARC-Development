@@ -1,10 +1,12 @@
 import React, {useState} from 'react';
+//Material UI Component
 import {ThemeProvider} from "@material-ui/styles";
 // Components
 import theme from './ui/Theme'
 import Header from "./ui/Header";
 import Footer from "./ui/Footer";
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import LandingPage from "./LandingPage";
 
 function App() {
     const [value, setValue] = useState(0);
@@ -18,7 +20,7 @@ function App() {
                         selectedIndex={selectedIndex}
                         setSelectedIndex={setSelectedIndex}/>
                 <Switch>
-                    <Route exact path="/" component={() => <div style={{height: '80vh'}}>Home</div>}/>
+                    <Route exact path="/" component={LandingPage}/>
                     <Route path="/services" component={() => <div>Services</div>}/>
                     <Route path="/customsoftware" component={() => <div>Custom Software</div>}/>
                     <Route path="/mobileapps" component={() => <div>Mobile App</div>}/>

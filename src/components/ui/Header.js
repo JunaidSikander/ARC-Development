@@ -73,6 +73,9 @@ const useStyles = makeStyles(theme => ({
         marginLeft: '50px',
         marginRight: '25px',
         height: '45px',
+        '&:hover': {
+            backgroundColor: theme.palette.secondary.light
+        }
     },
     menu: {
         backgroundColor: theme.palette.common.blue,
@@ -120,7 +123,7 @@ const useStyles = makeStyles(theme => ({
 export default function ({value, setValue, selectedIndex, setSelectedIndex}) {
     const classes = useStyles();
     const theme = useTheme();
-    const mediunScreen = useMediaQuery( theme.breakpoints.down('md'));
+    const matchesMD = useMediaQuery( theme.breakpoints.down('md'));
 
     const [anchorEl, setAnchorEl] = useState(null);
     const [openMenu, setOpenMenu] = useState(false);
@@ -131,7 +134,7 @@ export default function ({value, setValue, selectedIndex, setSelectedIndex}) {
     const menuOptions = [
         {name: "Services", link: "/services", activeIndex: 1, selectedIndex: 0},
         {name: "Custom Software Development", link: "/customsoftware", activeIndex: 1, selectedIndex: 1},
-        {name: "Mobile App Development", link: "/mobileapps", activeIndex: 1, selectedIndex: 2},
+        {name: "iOS/Android App Development", link: "/mobileapps", activeIndex: 1, selectedIndex: 2},
         {name: "Website Development", link: "/websites", activeIndex: 1, selectedIndex: 3}
     ];
 
@@ -277,7 +280,7 @@ export default function ({value, setValue, selectedIndex, setSelectedIndex}) {
                             onClick={() => setValue(0)}>
                             <img alt="company logo" className={classes.logo} src="/assets/logo.svg"/>
                         </Button>
-                        { mediunScreen ? drawer : tabs }
+                        { matchesMD ? drawer : tabs }
                     </Toolbar>
                 </AppBar>
             </ElevationScroll>

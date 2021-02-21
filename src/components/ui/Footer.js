@@ -99,8 +99,9 @@ const Footer = ({value, setValue, selectedIndex, setSelectedIndex}) => {
         </Hidden>
         <img className={classes.adorment} alt="black decorative slash" src={footerAdorment}/>
         <Grid container justify="flex-end" spacing={2} className={classes.socialContainer}>
-            {images.map( image =>
+            {images.map( (image, i) =>
                 <Grid item
+                      key={`${image.name}${i}`}
                       component={"a"}
                       href={image.href}
                       rel={image.rel}
