@@ -177,6 +177,9 @@ export default function ({value, setValue, selectedIndex, setSelectedIndex}) {
                         }
                     }
                     break;
+                case '/estimate':
+                    setValue(5);
+                    break;
                 default:
                     break;
             }
@@ -202,8 +205,9 @@ export default function ({value, setValue, selectedIndex, setSelectedIndex}) {
                     />
                 ))}
             </Tabs>
-            <Button className={classes.button} component={Link} to="/estimate" variant="contained"
-                    color="secondary">
+            <Button className={classes.button} component={Link}
+                    to="/estimate" variant="contained"
+                    color="secondary" onClick={() => setValue(5)} >
                 Free Estimate
             </Button>
             <Menu
