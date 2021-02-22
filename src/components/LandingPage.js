@@ -2,6 +2,7 @@ import React from 'react';
 import Lottie from 'react-lottie';
 import revolutionBackground from '../assets/repeatingBackground.svg';
 import infoBackground from '../assets/infoBackground.svg';
+import CallToAction from "./ui/CallToAction";
 //Animation File
 import animationData from '../animations/landinganimation/data';
 //Material UI Components
@@ -305,6 +306,9 @@ const LandingPage = () => {
                     </Grid>
                     <div className={classes.infoBackground}/>
                 </Grid>
+            </Grid>
+            <Grid item> { /*----- Call To Action Block -----*/}
+                <CallToAction/>
             </Grid>
         </Grid>
     )
