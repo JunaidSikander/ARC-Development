@@ -1,5 +1,5 @@
 import React from 'react';
-
+import {Link} from "react-router-dom";
 import background from '../../assets/background.jpg'
 import mobileBackground from '../../assets/mobileBackground.jpg'
 //Material UI Components
@@ -18,7 +18,7 @@ const useStyles = makeStyles(theme => ({
         padding: 5,
         [theme.breakpoints.down('sm')]: {
             marginBottom: '2em'
-        }
+        },
     },
     background: {
         backgroundImage: `url(${background})`,
@@ -46,13 +46,16 @@ const useStyles = makeStyles(theme => ({
             marginRight: 0,
             marginLeft: 0,
         },
+        '&:hover': {
+            backgroundColor: theme.palette.secondary.light
+        }
     }
 }));
 
-const CallToAction = () => {
+const CallToAction = ({setValue}) => {
     const classes = useStyles();
     const theme = useTheme();
-    const matchesSM = useMediaQuery( theme.breakpoints.down('sm'));
+    const matchesSM = useMediaQuery(theme.breakpoints.down('sm'));
 
     return <Grid container
                  alignItems='center'
@@ -73,7 +76,10 @@ const CallToAction = () => {
                           justify={matchesSM ? 'center' : undefined}
                     >
                         <Button variant='outlined'
-                                className={classes.learnButton}>
+                                className={classes.learnButton}
+                                component={Link}
+                                onClick={() => setValue(2)}
+                                to='/revolution'>
                             <span style={{marginRight: 5}}> Learn More </span>
                             <ButtonArrow width={10} height={10} fill={theme.palette.common.blue}/>
                         </Button>
@@ -82,7 +88,12 @@ const CallToAction = () => {
             </Grid>
         </Grid>
         <Grid item>
-            <Button variant='contained' className={classes.estimateButton}>Free Estimate</Button>
+            <Button variant='contained'
+                    className={classes.estimateButton}
+                    component={Link}
+                    onClick={() => setValue(5)}
+                    to='/estimate'
+            >Free Estimate</Button>
         </Grid>
     </Grid>
 };
