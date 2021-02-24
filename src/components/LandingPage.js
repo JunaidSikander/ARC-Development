@@ -311,7 +311,6 @@ const LandingPage = ({setValue, setSelectedIndex}) => {
                       className={classes.infoBackground}>
                     <Grid item container style={{textAlign: matchesXS ? 'center' : 'inherit'}}
                           direction={matchesXS ? 'column' : 'row'}
-                          spacing={matchesXS ? 10 : 0}
                     >
                         <Grid item sm style={{marginLeft: matchesXS ? 0 : matchesSM ? '2em' : '5em'}}>
                             <Grid container direction='column' style={{marginBottom: matchesXS ? '10em' : 0}}>
