@@ -2,7 +2,7 @@ import React, {cloneElement, useEffect, useState} from 'react';
 import {Link} from "react-router-dom";
 // Material UI Components
 import {makeStyles} from "@material-ui/styles";
-import { useTheme } from '@material-ui/core/styles'
+import {useTheme} from '@material-ui/core/styles'
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Tabs from "@material-ui/core/Tabs";
@@ -50,7 +50,7 @@ const useStyles = makeStyles(theme => ({
             height: '5em',
         },
         [theme.breakpoints.down('xs')]: {
-            height: '3.5em',
+            height: '4.2em',
         },
     },
     logoContainer: {
@@ -123,7 +123,7 @@ const useStyles = makeStyles(theme => ({
 export default function ({value, setValue, selectedIndex, setSelectedIndex}) {
     const classes = useStyles();
     const theme = useTheme();
-    const matchesMD = useMediaQuery( theme.breakpoints.down('md'));
+    const matchesMD = useMediaQuery(theme.breakpoints.down('md'));
 
     const [anchorEl, setAnchorEl] = useState(null);
     const [openMenu, setOpenMenu] = useState(false);
@@ -139,11 +139,18 @@ export default function ({value, setValue, selectedIndex, setSelectedIndex}) {
     ];
 
     const routes = [
-        {name: 'Home', link: '/', activeIndex: 0 },
-        {name: "Services", link: "/services", activeIndex: 1, ariaOwns: anchorEl ? "simple-menu" : undefined, ariaPopup: anchorEl ? "true" : undefined, mouseOver: event => handleClick(event) },
-        {name: 'The Revolution', link: "/revolution", activeIndex: 2 },
-        {name: 'About Us', link: "/about", activeIndex: 3 },
-        {name: 'Contact Us', link: "/contact", activeIndex: 4 },
+        {name: 'Home', link: '/', activeIndex: 0},
+        {
+            name: "Services",
+            link: "/services",
+            activeIndex: 1,
+            ariaOwns: anchorEl ? "simple-menu" : undefined,
+            ariaPopup: anchorEl ? "true" : undefined,
+            mouseOver: event => handleClick(event)
+        },
+        {name: 'The Revolution', link: "/revolution", activeIndex: 2},
+        {name: 'About Us', link: "/about", activeIndex: 3},
+        {name: 'Contact Us', link: "/contact", activeIndex: 4},
     ];
 
     const handleChange = (e, newValue) => {
@@ -168,11 +175,11 @@ export default function ({value, setValue, selectedIndex, setSelectedIndex}) {
 
     useEffect(() => {
         [...menuOptions, ...routes].forEach(route => {
-            switch(window.location.pathname) {
+            switch (window.location.pathname) {
                 case `${route.link}`:
-                    if(value !== route.activeIndex) {
+                    if (value !== route.activeIndex) {
                         setValue(route.activeIndex);
-                        if(route.selectedIndex && route.selectedIndex !== selectedIndex){
+                        if (route.selectedIndex && route.selectedIndex !== selectedIndex) {
                             setSelectedIndex(route.selectedIndex)
                         }
                     }
@@ -193,7 +200,7 @@ export default function ({value, setValue, selectedIndex, setSelectedIndex}) {
                 value={value}
                 onChange={handleChange}
                 indicatorColor="primary">
-                {routes.map( (route, index) => (
+                {routes.map((route, index) => (
                     <Tab aria-owns={route.ariaOwns}
                          aria-haspopup={route.ariaPopup}
                          className={classes.tab}
@@ -207,12 +214,12 @@ export default function ({value, setValue, selectedIndex, setSelectedIndex}) {
             </Tabs>
             <Button className={classes.button} component={Link}
                     to="/estimate" variant="contained"
-                    color="secondary" onClick={() => setValue(5)} >
+                    color="secondary" onClick={() => setValue(5)}>
                 Free Estimate
             </Button>
             <Menu
                 id="simple-menu"
-                classes={{ paper: classes.menu }}
+                classes={{paper: classes.menu}}
                 anchorEl={anchorEl}
                 open={openMenu}
                 onClose={handleClose}
@@ -221,11 +228,14 @@ export default function ({value, setValue, selectedIndex, setSelectedIndex}) {
                 stye={{zIndex: 1203}} // To Avoid Override Appbar
                 keepMounted>
 
-                {menuOptions.map( (option, i) => (
+                {menuOptions.map((option, i) => (
                     <MenuItem key={i}
-                              classes={{ root: classes.menuItem}}
+                              classes={{root: classes.menuItem}}
                               component={Link}
-                              onClick={(e) => {handleMenuItemClick(e,i); setValue(1)}}
+                              onClick={(e) => {
+                                  handleMenuItemClick(e, i);
+                                  setValue(1)
+                              }}
                               to={option.link}
                               selected={i === selectedIndex && value === 1}>
                         {option.name} </MenuItem>
@@ -236,7 +246,7 @@ export default function ({value, setValue, selectedIndex, setSelectedIndex}) {
 
     const drawer = (
         <>
-            <SwipeableDrawer classes={{ paper: classes.drawer }}
+            <SwipeableDrawer classes={{paper: classes.drawer}}
                              disableBackdropTransition={!iOS}
                              disableDiscovery={iOS}
                              open={openDrawer}
@@ -244,26 +254,32 @@ export default function ({value, setValue, selectedIndex, setSelectedIndex}) {
                              onOpen={() => setOpenDrawer(true)}>
                 <div className={classes.toolbarMargin}/>
                 <List disablePadding>
-                    {routes.map( route => (
+                    {routes.map(route => (
                         <ListItem
-                                  onClick={ () => { setOpenDrawer(false); setValue(route.activeIndex) } }
-                                  key={`${route}${route.activeIndex}`}
-                                  selected={value === route.activeIndex}
-                                  classes={{ selected: classes.drawerItemSelected }}
-                                  divider button component={Link} to='/'>
-                            <ListItemText className={classes.drawerItem} disableTypography>{ route.name }</ListItemText>
+                            onClick={() => {
+                                setOpenDrawer(false);
+                                setValue(route.activeIndex)
+                            }}
+                            key={`${route}${route.activeIndex}`}
+                            selected={value === route.activeIndex}
+                            classes={{selected: classes.drawerItemSelected}}
+                            divider button component={Link} to='/'>
+                            <ListItemText className={classes.drawerItem} disableTypography>{route.name}</ListItemText>
                         </ListItem>
-                    ) )}
+                    ))}
 
-                    <ListItem classes={{ root: classes.drawerItemEstimate, selected: classes.drawerItemSelected }}
-                              onClick={ () => {setOpenDrawer(false); setValue(5)} }
+                    <ListItem classes={{root: classes.drawerItemEstimate, selected: classes.drawerItemSelected}}
+                              onClick={() => {
+                                  setOpenDrawer(false);
+                                  setValue(5)
+                              }}
                               selected={value === 5}
                               divider button component={Link} to='/estimate'>
                         <ListItemText className={classes.drawerItem} disableTypography>Free Estimate</ListItemText>
                     </ListItem>
                 </List>
             </SwipeableDrawer>
-            <IconButton classes={{ root: classes.drawerIconContainer }}
+            <IconButton classes={{root: classes.drawerIconContainer}}
                         onClick={() => setOpenDrawer(!openDrawer)}
                         disableRipple>
                 <MenuIcon className={classes.drawerIcon}/>
@@ -284,7 +300,7 @@ export default function ({value, setValue, selectedIndex, setSelectedIndex}) {
                             onClick={() => setValue(0)}>
                             <img alt="company logo" className={classes.logo} src="/assets/logo.svg"/>
                         </Button>
-                        { matchesMD ? drawer : tabs }
+                        {matchesMD ? drawer : tabs}
                     </Toolbar>
                 </AppBar>
             </ElevationScroll>
