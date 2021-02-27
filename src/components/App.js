@@ -8,6 +8,7 @@ import Footer from "./ui/Footer";
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import LandingPage from "./LandingPage";
 import Services from "./Services";
+import CustomSoftware from "./CustomSoftware";
 
 function App() {
     const [value, setValue] = useState(0);
@@ -25,11 +26,14 @@ function App() {
                         <LandingPage {...props}
                                      setValue={setValue}
                                      setSelectedIndex={setSelectedIndex}/>}/>
-                    <Route path="/services" render={ (props) =>
+                    <Route path="/services" render={(props) =>
                         <Services {...props}
                                   setValue={setValue}
                                   setSelectedIndex={setSelectedIndex}/>}/>
-                    <Route path="/customsoftware" component={() => <div>Custom Software</div>}/>
+                    <Route path="/customsoftware" render={(props) =>
+                        <CustomSoftware {...props}
+                                        setValue={setValue}
+                                        setSelectedIndex={setSelectedIndex}/>}/>
                     <Route path="/mobileapps" component={() => <div>Mobile App</div>}/>
                     <Route path="/websites" component={() => <div>Websites</div>}/>
                     <Route path="/revolution" component={() => <div>Revolution</div>}/>
