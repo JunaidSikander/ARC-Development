@@ -9,6 +9,7 @@ import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import LandingPage from "./LandingPage";
 import Services from "./Services";
 import CustomSoftware from "./CustomSoftware";
+import MobileApps from "./MobileApps";
 
 function App() {
     const [value, setValue] = useState(0);
@@ -34,7 +35,10 @@ function App() {
                         <CustomSoftware {...props}
                                         setValue={setValue}
                                         setSelectedIndex={setSelectedIndex}/>}/>
-                    <Route path="/mobileapps" component={() => <div>Mobile App</div>}/>
+                    <Route path="/mobileapps" render={(props) =>
+                        <MobileApps {...props}
+                                        setValue={setValue}
+                                        setSelectedIndex={setSelectedIndex}/>}/>
                     <Route path="/websites" component={() => <div>Websites</div>}/>
                     <Route path="/revolution" component={() => <div>Revolution</div>}/>
                     <Route path="/about" component={() => <div>About us</div>}/>
