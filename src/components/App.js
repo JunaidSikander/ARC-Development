@@ -12,6 +12,7 @@ import CustomSoftware from "./CustomSoftware";
 import MobileApps from "./MobileApps";
 import Websites from "./Websites";
 import Revolution from "./Revolution";
+import About from "./About";
 
 function App() {
     const [value, setValue] = useState(0);
@@ -49,7 +50,10 @@ function App() {
                         <Revolution {...props}
                                     setValue={setValue}
                                     setSelectedIndex={setSelectedIndex}/>}/>
-                    <Route path="/about" component={() => <div>About us</div>}/>
+                    <Route path="/about" render={(props) =>
+                        <About {...props}
+                               setValue={setValue}
+                               setSelectedIndex={setSelectedIndex}/>}/>
                     <Route path="/contact" component={() => <div>Contact us</div>}/>
                     <Route path="/estimate" component={() => <div>Fee Estimate</div>}/>
                 </Switch>
