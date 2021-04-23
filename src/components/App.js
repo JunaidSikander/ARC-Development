@@ -13,6 +13,7 @@ import MobileApps from "./MobileApps";
 import Websites from "./Websites";
 import Revolution from "./Revolution";
 import About from "./About";
+import Contact from "./Contact";
 
 function App() {
     const [value, setValue] = useState(0);
@@ -54,7 +55,10 @@ function App() {
                         <About {...props}
                                setValue={setValue}
                                setSelectedIndex={setSelectedIndex}/>}/>
-                    <Route path="/contact" component={() => <div>Contact us</div>}/>
+                    <Route path="/contact" render={(props) =>
+                        <Contact {...props}
+                                 setValue={setValue}
+                                 setSelectedIndex={setSelectedIndex}/>}/>
                     <Route path="/estimate" component={() => <div>Fee Estimate</div>}/>
                 </Switch>
                 <Footer value={value}
