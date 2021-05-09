@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {Link} from 'react-router-dom';
+import emailjs from 'emailjs-com';
 //Material UI Components
 import {Button, Dialog, DialogContent, Grid, makeStyles, TextField, Typography, useTheme} from "@material-ui/core";
 //SVG icons
@@ -81,7 +82,7 @@ const Contact = ({setValue}) => {
 
     const [inputFields, setInputFields] = useState({name: '', email: '', phone: '', message: ''});
     const [validHelperText, setValidHelperText] = useState({email: '', phone: ''});
-    const [open, setOpen] = useState(true);
+    const [open, setOpen] = useState(false);
 
     //Handle Change Method with Validation
     const handleChange = (event) => {
@@ -112,6 +113,25 @@ const Contact = ({setValue}) => {
                 setInputFields({...inputFields, [event.target.id]: event.target.value})
                 break;
         }
+    };
+
+    //Submit Form with Emailjs
+    const onSubmit = (event) => {
+        event.preventDefault();
+
+        emailjs.send(
+            process.env.REACT_APP_SERVICE_ID,
+            process.env.REACT_APP_TEMPLATE_ID,
+            inputFields,
+            process.env.REACT_APP_USER_ID)
+            .then((response) => {
+                console.log('SUCCESS', response);
+                setOpen(false);
+
+            })
+            .catch((error) => {
+                console.log('error', error);
+            })
     };
 
     return (
@@ -199,58 +219,63 @@ const Contact = ({setValue}) => {
             </Grid>
             <Dialog open={open} onClose={() => setOpen(false)} style={{zIndex: 1302}}
                     fullScreen={matchesXS} PaperProps={{
-                        style: {
-                            paddingTop: matchesXS ? '1em' : '5em',
-                            paddingBottom: matchesXS ? '1em' : '5em',
-                            paddingLeft: matchesXS ? 0 : matchesSM ? '5em' : matchesMD ? '10em' : '20em',
-                            paddingRight: matchesXS ? 0 : matchesSM ? '5em' : matchesMD ? '10em' : '20em',
-                        }
-                    }}>
+                style: {
+                    paddingTop: matchesXS ? '1em' : '5em',
+                    paddingBottom: matchesXS ? '1em' : '5em',
+                    paddingLeft: matchesXS ? 0 : matchesSM ? '5em' : matchesMD ? '10em' : '20em',
+                    paddingRight: matchesXS ? 0 : matchesSM ? '5em' : matchesMD ? '10em' : '20em',
+                }
+            }}>
                 <DialogContent>
-                    <Grid container direction="column">
-                        <Grid item>
-                            <Typography variant='h4' align="center" gutterBottom>Confirm Message</Typography>
+                    <form onSubmit={onSubmit}>
+                        <Grid container direction="column">
+                            <Grid item>
+                                <Typography variant='h4' align="center" gutterBottom>Confirm Message</Typography>
+                            </Grid>
+                            <Grid item style={{marginBottom: '0.5em'}}>
+                                <TextField id='name' fullWidth label='Name' value={inputFields.name}
+                                           onChange={handleChange}/>
+                            </Grid>
+                            <Grid item style={{marginBottom: '0.5em'}}>
+                                <TextField id='email' fullWidth error={validHelperText.email.length !== 0}
+                                           helperText={validHelperText.email} label='Email' value={inputFields.email}
+                                           onChange={handleChange}/>
+                            </Grid>
+                            <Grid item style={{marginBottom: '0.5em'}}>
+                                <TextField id='phone' fullWidth error={validHelperText.phone.length !== 0}
+                                           helperText={validHelperText.phone} label='Phone' value={inputFields.phone}
+                                           onChange={handleChange}/>
+                            </Grid>
+                            <Grid item style={{maxWidth: '20em'}}>
+                                <TextField InputProps={{disableUnderline: true}} className={classes.message}
+                                           id='message'
+                                           multiline fullWidth rows={10} value={inputFields.message}
+                                           onChange={handleChange}/>
+                            </Grid>
                         </Grid>
-                        <Grid item style={{marginBottom: '0.5em'}}>
-                            <TextField id='name' fullWidth label='Name' value={inputFields.name}
-                                       onChange={handleChange}/>
+                        <Grid item container alignItems='center' direction={matchesSM ? "column" : "row"}
+                              style={{marginTop: '2em'}}>
+                            <Grid item>
+                                <Button color='primary' style={{fontWeight: 300}}
+                                        onClick={() => setOpen(false)}>Cancel</Button>
+                            </Grid>
+                            <Grid item>
+                                <Button className={classes.sendButton}
+                                        variant='contained'
+                                        type='submit'
+                                        disabled={
+                                            inputFields.name.length === 0 ||
+                                            inputFields.message.length === 0 ||
+                                            inputFields.email.length === 0 ||
+                                            inputFields.phone.length === 0 ||
+                                            validHelperText.email.length !== 0 ||
+                                            validHelperText.phone.length !== 0}>
+                                    Send Message
+                                    <img src={airplane} alt='paper airplane' style={{marginLeft: '1em'}}/>
+                                </Button>
+                            </Grid>
                         </Grid>
-                        <Grid item style={{marginBottom: '0.5em'}}>
-                            <TextField id='email' fullWidth error={validHelperText.email.length !== 0}
-                                       helperText={validHelperText.email} label='Email' value={inputFields.email}
-                                       onChange={handleChange}/>
-                        </Grid>
-                        <Grid item style={{marginBottom: '0.5em'}}>
-                            <TextField id='phone' fullWidth error={validHelperText.phone.length !== 0}
-                                       helperText={validHelperText.phone} label='Phone' value={inputFields.phone}
-                                       onChange={handleChange}/>
-                        </Grid>
-                        <Grid item style={{maxWidth: '20em'}}>
-                            <TextField InputProps={{disableUnderline: true}} className={classes.message} id='message'
-                                       multiline fullWidth rows={10} value={inputFields.message}
-                                       onChange={handleChange}/>
-                        </Grid>
-                    </Grid>
-                    <Grid item container alignItems='center' direction={matchesSM ? "column" : "row"}
-                          style={{marginTop: '2em'}}>
-                        <Grid item>
-                            <Button color='primary' style={{fontWeight: 300}}
-                                    onClick={() => setOpen(false)}>Cancel</Button>
-                        </Grid>
-                        <Grid item>
-                            <Button className={classes.sendButton} variant='contained' onClick={() => setOpen(true)}
-                                    disabled={
-                                        inputFields.name.length === 0 ||
-                                        inputFields.message.length === 0 ||
-                                        inputFields.email.length === 0 ||
-                                        inputFields.phone.length === 0 ||
-                                        validHelperText.email.length !== 0 ||
-                                        validHelperText.phone.length !== 0}>
-                                Send Message
-                                <img src={airplane} alt='paper airplane' style={{marginLeft: '1em'}}/>
-                            </Button>
-                        </Grid>
-                    </Grid>
+                    </form>
                 </DialogContent>
             </Dialog>
             <Grid item container direction={matchesMD ? 'column' : 'row'}
