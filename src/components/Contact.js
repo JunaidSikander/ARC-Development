@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {Link} from 'react-router-dom';
 import emailjs from 'emailjs-com';
 //Material UI Components
-import {Button, CircularProgress, Dialog, DialogContent, Grid, makeStyles, TextField, Typography, useTheme} from "@material-ui/core";
+import {Button, CircularProgress, Dialog, DialogContent, Grid, makeStyles, Snackbar, TextField, Typography, useTheme} from "@material-ui/core";
 //SVG icons
 import background from '../assets/background.jpg';
 import mobileBackground from '../assets/mobileBackground.jpg';
@@ -84,6 +84,7 @@ const Contact = ({setValue}) => {
     const [validHelperText, setValidHelperText] = useState({email: '', phone: ''});
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [alert,setAlert] = useState({ open: false, message: '', backgroundColor: '' });
 
     //Handle Change Method with Validation
     const handleChange = (event) => {
@@ -127,13 +128,13 @@ const Contact = ({setValue}) => {
             inputFields,
             process.env.REACT_APP_USER_ID)
             .then((response) => {
-                console.log('SUCCESS', response);
                 setOpen(false);
                 setLoading(false);
+                setAlert({open: true, message: 'Message sent successfully', backgroundColor: '#4BB543'});
                 event.target.reset();
             })
             .catch((error) => {
-                console.log('error', error);
+                setAlert({open: true, message: 'Something went wrong, please try again!', backgroundColor: '#FF3232'});
                 setLoading(false);
             })
     };
@@ -287,6 +288,12 @@ const Contact = ({setValue}) => {
                     </form>
                 </DialogContent>
             </Dialog>
+            <Snackbar open={alert.open} message={alert.message}
+                      ContentProps={{ style: {backgroundColor: alert.backgroundColor} }}
+                      anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+                      onClose={() => setAlert({...alert, open: false})}
+                      autoHideDuration={4000}
+            />
             <Grid item container direction={matchesMD ? 'column' : 'row'}
                   justify={matchesMD ? 'center' : undefined}
                   className={classes.background} alignItems='center' lg={8} xl={9}>
