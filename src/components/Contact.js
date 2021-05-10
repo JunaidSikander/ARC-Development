@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {Link} from 'react-router-dom';
 import emailjs from 'emailjs-com';
 //Material UI Components
-import {Button, Dialog, DialogContent, Grid, makeStyles, TextField, Typography, useTheme} from "@material-ui/core";
+import {Button, CircularProgress, Dialog, DialogContent, Grid, makeStyles, TextField, Typography, useTheme} from "@material-ui/core";
 //SVG icons
 import background from '../assets/background.jpg';
 import mobileBackground from '../assets/mobileBackground.jpg';
@@ -83,6 +83,7 @@ const Contact = ({setValue}) => {
     const [inputFields, setInputFields] = useState({name: '', email: '', phone: '', message: ''});
     const [validHelperText, setValidHelperText] = useState({email: '', phone: ''});
     const [open, setOpen] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     //Handle Change Method with Validation
     const handleChange = (event) => {
@@ -119,6 +120,7 @@ const Contact = ({setValue}) => {
     const onSubmit = (event) => {
         event.preventDefault();
 
+        setLoading(true);
         emailjs.send(
             process.env.REACT_APP_SERVICE_ID,
             process.env.REACT_APP_TEMPLATE_ID,
@@ -127,12 +129,21 @@ const Contact = ({setValue}) => {
             .then((response) => {
                 console.log('SUCCESS', response);
                 setOpen(false);
-
+                setLoading(false);
+                event.target.reset();
             })
             .catch((error) => {
                 console.log('error', error);
+                setLoading(false);
             })
     };
+
+    const buttonContents = (
+        <>
+            Send Message
+            <img src={airplane} alt='paper airplane' style={{marginLeft: '1em'}}/>
+        </>
+    );
 
     return (
         <Grid container>
@@ -210,8 +221,7 @@ const Contact = ({setValue}) => {
                                         inputFields.phone.length === 0 ||
                                         validHelperText.email.length !== 0 ||
                                         validHelperText.phone.length !== 0}>
-                                Send Message
-                                <img src={airplane} alt='paper airplane' style={{marginLeft: '1em'}}/>
+                                {buttonContents}
                             </Button>
                         </Grid>
                     </Grid>
@@ -270,8 +280,7 @@ const Contact = ({setValue}) => {
                                             inputFields.phone.length === 0 ||
                                             validHelperText.email.length !== 0 ||
                                             validHelperText.phone.length !== 0}>
-                                    Send Message
-                                    <img src={airplane} alt='paper airplane' style={{marginLeft: '1em'}}/>
+                                    {loading ? <CircularProgress size={30}/> : buttonContents}
                                 </Button>
                             </Grid>
                         </Grid>
