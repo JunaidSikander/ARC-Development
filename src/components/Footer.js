@@ -1,59 +1,12 @@
 import React from 'react';
-import footerAdorment from '../../assets/Footer Adornment.svg'
 import {Link} from 'react-router-dom'
+import {facebook, footerAdorment, instagram, twitter} from "assets";
+import {footerStyle} from "styles"
 //Material UI Components
-import makeStyles from "@material-ui/core/styles/makeStyles";
-import Grid from "@material-ui/core/Grid";
-import Hidden from "@material-ui/core/Hidden";
-
-
-const useStyles = makeStyles(theme => ({
-    footer: {
-        backgroundColor: theme.palette.common.blue,
-        width: '100%',
-        zIndex: 1302,
-        position: 'relative'
-    },
-    adorment: {
-        width: '25em',
-        verticalAlign: 'bottom',
-        [theme.breakpoints.down('md')]: {
-            width: '18em'
-        },
-        [theme.breakpoints.down('xs')]: {
-            width: '12em'
-        },
-    },
-    mainContainer: {
-        position: 'absolute'
-    },
-    link: {
-        color: 'white',
-        fontFamily: 'Arial',
-        fontSize: '1rem',
-        fontWeight: 'bold',
-        textDecoration: 'none'
-    },
-    gridItem: {
-        margin: '3em'
-    },
-    icon: {
-        height: '4em',
-        width: '4em',
-        [theme.breakpoints.down('xs')]: {
-            height: '2.5em',
-            width: '2.5em',
-        }
-    },
-    socialContainer: {
-        position: 'absolute',
-        marginTop: '-6em',
-        right: "0.5rem"
-    }
-}));
+import {Grid, Hidden} from "@material-ui/core";
 
 const Footer = ({setValue, setSelectedIndex}) => {
-    const classes = useStyles();
+    const classes = footerStyle();
 
     const footerMenus = [
         [{name: 'Home', link: '/', activeIndex: 0}],
@@ -67,35 +20,39 @@ const Footer = ({setValue, setSelectedIndex}) => {
             name: 'The Revolution',
             link: "/revolution",
             activeIndex: 2
-        }, {name: 'Vision'}, {name: 'Technology'}, {name: 'Process'}],
-        [{name: 'About Us', link: "/about", activeIndex: 3}, {name: 'History'}, {name: 'Team'}],
+        }, {name: 'Vision', link: '/revolution'},
+            {name: 'Technology', link: '/revolution'},
+            {name: 'Process', link: '/revolution'}],
+        [{name: 'About Us', link: "/about", activeIndex: 3}, {name: 'History', link: "/about",}, {
+            name: 'Team',
+            link: "/about",
+        }],
         [{name: 'Contact Us', link: "/contact", activeIndex: 4}]
     ];
 
     const images = [
         {
-            name: 'facebook.svg',
+            src: facebook,
             href: 'https://www.facebook.com/',
             rel: 'noopener noreferrer',
             target: '_blank',
             alt: 'facebook logo'
         },
         {
-            name: 'instagram.svg',
+            src: instagram,
             href: 'https://www.instagram.com',
             rel: 'noopener noreferrer',
             target: '_blank',
             alt: 'instagram logo'
         },
         {
-            name: 'twitter.svg',
+            src: twitter,
             href: 'https://twitter.com/',
             rel: 'noopener noreferrer',
             target: '_blank',
             alt: 'twitter logo'
         },
     ];
-
 
     return <footer className={classes.footer}>
         <Hidden mdDown>
@@ -131,7 +88,7 @@ const Footer = ({setValue, setSelectedIndex}) => {
                       href={image.href}
                       rel={image.rel}
                       target={image.target}>
-                    <img alt={image.alt} src={`assets/${image.name}`} className={classes.icon}/>
+                    <img alt={image.alt} src={image.src} className={classes.icon}/>
                 </Grid>
             )}
         </Grid>

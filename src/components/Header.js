@@ -1,23 +1,26 @@
 import React, {cloneElement, useEffect, useState} from 'react';
 import {Link} from "react-router-dom";
+import {logo} from "assets";
+import { headerStyles } from "styles"
 // Material UI Components
-import {makeStyles} from "@material-ui/styles";
-import {useTheme} from '@material-ui/core/styles'
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
-import useScrollTrigger from '@material-ui/core/useScrollTrigger';
-import Button from "@material-ui/core/Button";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
-import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
-import IconButton from "@material-ui/core/IconButton";
+import {useTheme} from "@material-ui/styles";
+import {
+    AppBar,
+    Button,
+    IconButton,
+    List,
+    ListItem,
+    ListItemText,
+    Menu,
+    MenuItem,
+    SwipeableDrawer,
+    Tab,
+    Tabs,
+    Toolbar,
+    useMediaQuery,
+    useScrollTrigger
+} from '@material-ui/core'
 import MenuIcon from '@material-ui/icons/Menu';
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
 
 function ElevationScroll(props) {
     const {children, window} = props;
@@ -33,95 +36,8 @@ function ElevationScroll(props) {
     });
 }
 
-const useStyles = makeStyles(theme => ({
-    toolbarMargin: {
-        ...theme.mixins.toolbar,
-        marginBottom: '1em',
-        [theme.breakpoints.down('md')]: {
-            marginBottom: '0.5em',
-        },
-        [theme.breakpoints.down('xs')]: {
-            marginBottom: '0.1em',
-        },
-    },
-    logo: {
-        height: '6em',
-        [theme.breakpoints.down('md')]: {
-            height: '5em',
-        },
-        [theme.breakpoints.down('xs')]: {
-            height: '4.2em',
-        },
-    },
-    logoContainer: {
-        padding: 0,
-        '&:hover': {
-            background: 'transparent'
-        }
-    },
-    tabContainer: {
-        marginLeft: 'auto'
-    },
-    tab: {
-        ...theme.typography.tab,
-        minWidth: 10,
-        marginLeft: '25px'
-    },
-    button: {
-        ...theme.typography.estimate,
-        borderRadius: '50px',
-        marginLeft: '50px',
-        marginRight: '25px',
-        height: '45px',
-        '&:hover': {
-            backgroundColor: theme.palette.secondary.light
-        }
-    },
-    menu: {
-        backgroundColor: theme.palette.common.blue,
-        color: 'white',
-        borderRadius: '0px'
-    },
-    menuItem: {
-        ...theme.typography.tab,
-        opacity: 0.7,
-        '&:hover': {
-            opacity: 1
-        }
-    },
-    drawerIconContainer: {
-        marginLeft: 'auto',
-        '&:hover': {
-            backgroundColor: 'transparent'
-        }
-    },
-    drawerIcon: {
-        height: '40px',
-        width: '40px'
-    },
-    drawer: {
-        backgroundColor: theme.palette.common.blue
-    },
-    drawerItem: {
-        ...theme.typography.tab,
-        color: 'white',
-        opacity: 0.8
-    },
-    drawerItemEstimate: {
-        backgroundColor: theme.palette.common.orange
-    },
-    drawerItemSelected: {
-        '& .MuiListItemText-root': {
-            opacity: 1
-        },
-    },
-    appbar: {
-        zIndex: theme.zIndex.modal + 1
-    }
-}));
-
-export default function ({value, setValue, selectedIndex, setSelectedIndex}) {
-    const classes = useStyles();
+export default function Header ({value, setValue, selectedIndex, setSelectedIndex}) {
+    const classes = headerStyles();
     const theme = useTheme();
     const matchesMD = useMediaQuery(theme.breakpoints.down('md'));
 
@@ -153,9 +69,7 @@ export default function ({value, setValue, selectedIndex, setSelectedIndex}) {
         {name: 'Contact Us', link: "/contact", activeIndex: 4},
     ];
 
-    const handleChange = (e, newValue) => {
-        setValue(newValue);
-    };
+    const handleChange = (e, newValue) => setValue(newValue);
 
     const handleClick = (e) => {
         setAnchorEl(e.currentTarget);
@@ -225,18 +139,19 @@ export default function ({value, setValue, selectedIndex, setSelectedIndex}) {
                 onClose={handleClose}
                 MenuListProps={{onMouseLeave: handleClose}}
                 elevation={0}
-                stye={{zIndex: 1203}} // To Avoid Override Appbar
+                style={{ zIndex: 1302 }} // To Avoid Override Appbar
                 keepMounted>
 
                 {menuOptions.map((option, i) => (
                     <MenuItem key={i}
                               classes={{root: classes.menuItem}}
                               component={Link}
+                              to={option.link}
                               onClick={(e) => {
                                   handleMenuItemClick(e, i);
-                                  setValue(1)
+                                  setValue(1);
+                                  handleClose();
                               }}
-                              to={option.link}
                               selected={i === selectedIndex && value === 1}>
                         {option.name} </MenuItem>
                 ))}
@@ -263,7 +178,7 @@ export default function ({value, setValue, selectedIndex, setSelectedIndex}) {
                             key={`${route}${route.activeIndex}`}
                             selected={value === route.activeIndex}
                             classes={{selected: classes.drawerItemSelected}}
-                            divider button component={Link} to='/'>
+                            divider button component={Link} to={route.link}>
                             <ListItemText className={classes.drawerItem} disableTypography>{route.name}</ListItemText>
                         </ListItem>
                     ))}
@@ -298,7 +213,7 @@ export default function ({value, setValue, selectedIndex, setSelectedIndex}) {
                             component={Link}
                             to="/"
                             onClick={() => setValue(0)}>
-                            <img alt="company logo" className={classes.logo} src="/assets/logo.svg"/>
+                            <img alt="company logo" className={classes.logo} src={logo}/>
                         </Button>
                         {matchesMD ? drawer : tabs}
                     </Toolbar>

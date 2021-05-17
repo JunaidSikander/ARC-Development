@@ -1,44 +1,40 @@
 import React from "react";
 import Lottie from "react-lottie";
 import {Link} from "react-router-dom";
-import CallToAction from "./ui/CallToAction";
+import {CallToAction, Paragraph} from "components";
+import {backArrow, extendAccess, forwardArrow, increaseEngagement, swissKnife} from "assets";
+import {commonStyle} from "styles"
 //Animation File
-import integrationAnimation from "../animations/integrationAnimation/data.json";
+import {integrationAnimation} from "animations";
 //Material UI Components
-import {makeStyles, useTheme} from "@material-ui/core/styles";
-import IconButton from "@material-ui/core/IconButton";
-import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
-import Hidden from "@material-ui/core/Hidden";
-
-const useStyles = makeStyles(theme => ({
-    heading: {
-        maxWidth: "40em"
-    },
-    arrowContainer: {
-        marginTop: "0.5em"
-    },
-    rowContainer: {
-        paddingLeft: "5em",
-        paddingRight: "5em",
-        [theme.breakpoints.down("sm")]: {
-            paddingLeft: "1.5em",
-            paddingRight: "1.5em"
-        }
-    }
-}));
+import {Grid, Hidden, IconButton, Typography, useMediaQuery} from "@material-ui/core";
+import {useTheme} from "@material-ui/styles";
 
 const MobileApps = ({setValue, setSelectedIndex}) => {
-    const classes = useStyles();
+    const classes = commonStyle();
     const theme = useTheme();
     const matchesMD = useMediaQuery(theme.breakpoints.down("md"));
     const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
     const matchesXS = useMediaQuery(theme.breakpoints.down("xs"));
 
+    //Static Content
+    const mobileDevelopmentParagraphs = [
+        'Mobile apps allow you to take your tools on the go.',
+        'Whether you want an app for your customers, employees, or yourself, we can build cross-platform native solutions for any part of your business process. This opens you up to a whole new  world of possibilities by taking advantage of phone features like the camera, GPS, push notifications, and more.',
+        'Convenience. Connection.'
+    ];
+    const integrationParagraphs = [
+        'Our technology enables an innate interconnection between web and mobile applications, putting everything you need right in one convenient place.',
+        'This allows you to extend your reach, reinvent interactions, and develop a stronger relationship with your users than ever before.'
+    ];
+    const simulationParagraphs = [
+        'Our cutting-edge development process allows us to create apps for iPhone, Android, and tablets — all at the same time.',
+        'This significantly reduces costs and creates a more unified brand experience across all devices.'
+    ];
+
     const defaultOptions = {
         loop: true,
-        autoplay: false,
+        autoplay: true,
         animationData: integrationAnimation,
         rendererSettings: {
             preserveAspectRatio: "xMidYMid slice"
@@ -68,7 +64,7 @@ const MobileApps = ({setValue, setSelectedIndex}) => {
                             onClick={() => setSelectedIndex(1)}
                         >
                             <img
-                                src="assets/backArrow.svg"
+                                src={backArrow}
                                 alt="Back to Custom Software Development Page"
                             />
                         </IconButton>
@@ -81,31 +77,7 @@ const MobileApps = ({setValue, setSelectedIndex}) => {
                         </Typography>
                     </Grid>
                     <Grid item>
-                        <Typography
-                            align={matchesMD ? "center" : undefined}
-                            variant="body1"
-                            paragraph
-                        >
-                            Mobile apps allow you to take your tools on the go.
-                        </Typography>
-                        <Typography
-                            align={matchesMD ? "center" : undefined}
-                            variant="body1"
-                            paragraph
-                        >
-                            Whether you want an app for your customers, employees, or
-                            yourself, we can build cross-platform native solutions for any
-                            part of your business process. This opens you up to a whole new
-                            world of possibilities by taking advantage of phone features like
-                            the camera, GPS, push notifications, and more.
-                        </Typography>
-                        <Typography
-                            align={matchesMD ? "center" : undefined}
-                            variant="body1"
-                            paragraph
-                        >
-                            Convenience. Connection.
-                        </Typography>
+                        <Paragraph paragraphs={mobileDevelopmentParagraphs} align={matchesMD ? "center" : "justify"}/>
                     </Grid>
                 </Grid>
                 <Hidden mdDown>
@@ -117,7 +89,7 @@ const MobileApps = ({setValue, setSelectedIndex}) => {
                             onClick={() => setSelectedIndex(3)}
                         >
                             <img
-                                src='assets/forwardArrow.svg'
+                                src={forwardArrow}
                                 alt="Forward to Website Development Page"
                             />
                         </IconButton>
@@ -129,8 +101,7 @@ const MobileApps = ({setValue, setSelectedIndex}) => {
                 container
                 direction={matchesSM ? "column" : "row"}
                 style={{marginTop: "15em", marginBottom: "15em"}}
-                className={classes.rowContainer}
-            >
+                className={classes.rowContainer}>
                 <Grid item container direction="column" md>
                     <Grid item>
                         <Typography
@@ -142,23 +113,7 @@ const MobileApps = ({setValue, setSelectedIndex}) => {
                         </Typography>
                     </Grid>
                     <Grid item>
-                        <Typography
-                            align={matchesSM ? "center" : undefined}
-                            variant="body1"
-                            paragraph
-                        >
-                            Our technology enables an innate interconnection between web and
-                            mobile applications, putting everything you need right in one
-                            convenient place.
-                        </Typography>
-                        <Typography
-                            align={matchesSM ? "center" : undefined}
-                            variant="body1"
-                            paragraph
-                        >
-                            This allows you to extend your reach, reinvent interactions, and
-                            develop a stronger relationship with your users than ever before.
-                        </Typography>
+                        <Paragraph paragraphs={integrationParagraphs} align={matchesSM ? "center" : 'justify'}/>
                     </Grid>
                 </Grid>
                 <Grid item md>
@@ -171,7 +126,7 @@ const MobileApps = ({setValue, setSelectedIndex}) => {
                 <Grid item container direction="column" md>
                     <Grid item>
                         <Typography
-                            align={matchesSM ? "center" : "right"}
+                            align={matchesSM ? "center" : "left"}
                             variant="h4"
                             gutterBottom
                         >
@@ -179,22 +134,7 @@ const MobileApps = ({setValue, setSelectedIndex}) => {
                         </Typography>
                     </Grid>
                     <Grid item>
-                        <Typography
-                            align={matchesSM ? "center" : "right"}
-                            variant="body1"
-                            paragraph
-                        >
-                            Our cutting-edge development process allows us to create apps for
-                            iPhone, Android, and tablets — all at the same time.
-                        </Typography>
-                        <Typography
-                            align={matchesSM ? "center" : "right"}
-                            variant="body1"
-                            paragraph
-                        >
-                            This significantly reduces costs and creates a more unified brand
-                            experience across all devices.
-                        </Typography>
+                        <Paragraph paragraphs={simulationParagraphs} align={matchesSM ? "center" : "justify"}/>
                     </Grid>
                 </Grid>
             </Grid>
@@ -212,7 +152,7 @@ const MobileApps = ({setValue, setSelectedIndex}) => {
                         </Typography>
                     </Grid>
                     <Grid item>
-                        <img src="assets/swissKnife.svg" alt="swiss army knife"/>
+                        <img src={swissKnife} alt="swiss army knife"/>
                     </Grid>
                 </Grid>
                 <Grid
@@ -233,7 +173,7 @@ const MobileApps = ({setValue, setSelectedIndex}) => {
                     </Grid>
                     <Grid item>
                         <img
-                            src="assets/extendAccess.svg"
+                            src={extendAccess}
                             alt="tear-one-off sign"
                             style={{maxWidth: matchesXS ? "20em" : "28em"}}
                         />
@@ -246,7 +186,7 @@ const MobileApps = ({setValue, setSelectedIndex}) => {
                         </Typography>
                     </Grid>
                     <Grid item>
-                        <img src="assets/increaseEngagement.svg" alt="app with notification"/>
+                        <img src={increaseEngagement} alt="app with notification"/>
                     </Grid>
                 </Grid>
             </Grid>

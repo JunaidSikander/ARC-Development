@@ -1,22 +1,12 @@
 import React, {useState} from 'react';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 //Material UI Component
 import {ThemeProvider} from "@material-ui/styles";
 // Components
-import theme from './ui/Theme'
-import Header from "./ui/Header";
-import Footer from "./ui/Footer";
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
-import LandingPage from "./LandingPage";
-import Services from "./Services";
-import CustomSoftware from "./CustomSoftware";
-import MobileApps from "./MobileApps";
-import Websites from "./Websites";
-import Revolution from "./Revolution";
-import About from "./About";
-import Contact from "./Contact";
-import Estimate from "./Estimate";
+import {Footer, Header, theme} from 'components'
+import {About, Contact, CustomSoftware, Estimate, LandingPage, MobileApps, Revolution, Services, Websites} from "pages";
 
-function App() {
+export default function App() {
     const [value, setValue] = useState(0);
     const [selectedIndex, setSelectedIndex] = useState(0);
 
@@ -73,5 +63,3 @@ function App() {
         </ThemeProvider>
     );
 }
-
-export default App;

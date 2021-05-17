@@ -1,40 +1,30 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import CallToAction from "./ui/CallToAction";
+import {Link} from "react-router-dom";
+import {CallToAction, Paragraph} from "components";
+import {analytics, backArrow, ecommerce, forwardArrow, outreach, seo} from "assets";
+import {commonStyle, websitesStyle} from "styles"
 //Material UI Components
-import { makeStyles, useTheme } from "@material-ui/core/styles";
-import Grid from "@material-ui/core/Grid";
-import IconButton from "@material-ui/core/IconButton";
-import Typography from "@material-ui/core/Typography";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
-import Hidden from "@material-ui/core/Hidden";
+import {Grid, Hidden, IconButton, Typography, useMediaQuery} from "@material-ui/core";
+import {useTheme} from "@material-ui/styles";
 
-const useStyles = makeStyles(theme => ({
-    heading: {
-        maxWidth: "40em"
-    },
-    arrowContainer: {
-        marginTop: "0.5em"
-    },
-    rowContainer: {
-        paddingLeft: "5em",
-        paddingRight: "5em",
-        [theme.breakpoints.down("sm")]: {
-            paddingLeft: "1.5em",
-            paddingRight: "1.5em"
-        }
-    },
-    paragraphContainer: {
-        maxWidth: "30em"
-    }
-}));
-
-const Websites = ({ setValue, setSelectedIndex }) => {
-    const classes = useStyles();
+const Websites = ({setValue, setSelectedIndex}) => {
+    const classes = websitesStyle();
+    const commonClasses = commonStyle();
     const theme = useTheme();
     const matchesMD = useMediaQuery(theme.breakpoints.down("md"));
     const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
     const matchesXS = useMediaQuery(theme.breakpoints.down("xs"));
+
+    //Static Content
+    const websiteParagraphs = [
+        'Having a website is a necessity in today’s business world. They give you one central, public location to let people know who you are, what you do, and why you’re the best at it.',
+        'From simply having your hours posted to having a full fledged online store, making yourself as accessible as possible to users online drives growth and enables you to reach new customers.'
+    ];
+    const seoParagraphs = [
+        'How often have you ever been to the second page of Google results?',
+        'If you’re like us, probably never.',
+        'Customers don’t go there either, so we make sure your website is designed to end up on top.'
+    ];
 
     return (
         <Grid container direction="column">
@@ -43,64 +33,47 @@ const Websites = ({ setValue, setSelectedIndex }) => {
                 container
                 direction="row"
                 justify={matchesMD ? "center" : undefined}
-                className={classes.rowContainer}
-                style={{ marginTop: matchesXS ? "1em" : "2em" }}
+                className={commonClasses.rowContainer}
+                style={{marginTop: matchesXS ? "1em" : "2em"}}
             >
                 <Hidden mdDown>
                     <Grid
                         item
-                        className={classes.arrowContainer}
-                        style={{ marginRight: "1em", marginLeft: "-3.5em" }}
+                        className={commonClasses.arrowContainer}
+                        style={{marginRight: "1em", marginLeft: "-3.5em"}}
                     >
                         <IconButton
-                            style={{ backgroundColor: "transparent" }}
+                            style={{backgroundColor: "transparent"}}
                             component={Link}
                             to="/mobileapps"
                             onClick={() => setSelectedIndex(2)}
                         >
                             <img
-                                src="assets/backArrow.svg"
+                                src={backArrow}
                                 alt="Back to iOS/Android App Development Page"
                             />
                         </IconButton>
                     </Grid>
                 </Hidden>
-                <Grid item container direction="column" className={classes.heading}>
+                <Grid item container direction="column" className={commonClasses.heading}>
                     <Grid item>
                         <Typography align={matchesMD ? "center" : undefined} variant="h2">
                             Website Development
                         </Typography>
                     </Grid>
                     <Grid item>
-                        <Typography
-                            align={matchesMD ? "center" : undefined}
-                            variant="body1"
-                            paragraph
-                        >
-                            Having a website is a necessity in today’s business world. They
-                            give you one central, public location to let people know who you
-                            are, what you do, and why you’re the best at it.
-                        </Typography>
-                        <Typography
-                            align={matchesMD ? "center" : undefined}
-                            variant="body1"
-                            paragraph
-                        >
-                            From simply having your hours posted to having a full fledged
-                            online store, making yourself as accessible as possible to users
-                            online drives growth and enables you to reach new customers.
-                        </Typography>
+                        <Paragraph paragraphs={websiteParagraphs} align={matchesMD ? "center" : "justify"}/>
                     </Grid>
                 </Grid>
                 <Hidden mdDown>
-                    <Grid item className={classes.arrowContainer}>
+                    <Grid item className={commonClasses.arrowContainer}>
                         <IconButton
-                            style={{ backgroundColor: "transparent" }}
+                            style={{backgroundColor: "transparent"}}
                             component={Link}
                             to="/services"
                             onClick={() => setSelectedIndex(0)}
                         >
-                            <img src="assets/forwardArrow.svg" alt="Forward to Services Page" />
+                            <img src={forwardArrow} alt="Forward to Services Page"/>
                         </IconButton>
                     </Grid>
                 </Hidden>
@@ -110,8 +83,8 @@ const Websites = ({ setValue, setSelectedIndex }) => {
                 container
                 direction={matchesSM ? "column" : "row"}
                 alignItems="center"
-                className={classes.rowContainer}
-                style={{ marginTop: "15em" }}
+                className={commonClasses.rowContainer}
+                style={{marginTop: "15em"}}
             >
                 <Grid item>
                     <Grid container direction="column">
@@ -126,15 +99,15 @@ const Websites = ({ setValue, setSelectedIndex }) => {
                         </Grid>
                         <Grid item>
                             <img
-                                src="assets/analytics.svg"
-                                style={{ marginLeft: "-2.75em" }}
+                                src={analytics}
+                                style={{marginLeft: "-2.75em"}}
                                 alt="graph with magnifying glass revealing 1's and 0's"
                             />
                         </Grid>
                     </Grid>
                 </Grid>
                 <Grid item className={classes.paragraphContainer}>
-                    <Typography align={matchesSM ? "center" : undefined} variant="body1">
+                    <Typography align={matchesSM ? "center" : "justify"} variant="body1">
                         Knowledge is power, and data is 21st Century gold. Analyzing this
                         data can reveal hidden patterns and trends in your business,
                         empowering you to make smarter decisions with measurable effects.
@@ -147,8 +120,8 @@ const Websites = ({ setValue, setSelectedIndex }) => {
                 direction={matchesSM ? "column" : "row"}
                 alignItems="center"
                 justify="flex-end"
-                className={classes.rowContainer}
-                style={{ marginBottom: "15em", marginTop: "15em" }}
+                className={commonClasses.rowContainer}
+                style={{marginBottom: "15em", marginTop: "15em"}}
             >
                 <Grid item>
                     <Grid container direction="column">
@@ -158,24 +131,24 @@ const Websites = ({ setValue, setSelectedIndex }) => {
                             </Typography>
                         </Grid>
                         <Grid item>
-                            <img src="assets/ecommerce.svg" alt="world outline made of dollar signs" />
+                            <img src={ecommerce} alt="world outline made of dollar signs"/>
                         </Grid>
                     </Grid>
                 </Grid>
                 <Grid
                     item
-                    style={{ marginLeft: matchesSM ? 0 : "1em" }}
+                    style={{marginLeft: matchesSM ? 0 : "1em"}}
                     className={classes.paragraphContainer}
                 >
                     <Typography
-                        align={matchesSM ? "center" : undefined}
+                        align={matchesSM ? "center" : "justify"}
                         variant="body1"
                         paragraph
                     >
                         It’s no secret that people like to shop online.
                     </Typography>
                     <Typography
-                        align={matchesSM ? "center" : undefined}
+                        align={matchesSM ? "center" : "justify"}
                         variant="body1"
                         paragraph
                     >
@@ -189,7 +162,7 @@ const Websites = ({ setValue, setSelectedIndex }) => {
                 container
                 direction={matchesSM ? "column" : "row"}
                 alignItems="center"
-                className={classes.rowContainer}
+                className={commonClasses.rowContainer}
             >
                 <Grid item>
                     <Grid container direction="column">
@@ -203,16 +176,16 @@ const Websites = ({ setValue, setSelectedIndex }) => {
                             </Typography>
                         </Grid>
                         <Grid item>
-                            <img src="assets/outreach.svg" alt="megaphone" />
+                            <img src={outreach} alt="megaphone"/>
                         </Grid>
                     </Grid>
                 </Grid>
                 <Grid
                     item
                     className={classes.paragraphContainer}
-                    style={{ marginLeft: matchesSM ? 0 : "1em" }}
+                    style={{marginLeft: matchesSM ? 0 : "1em"}}
                 >
-                    <Typography align={matchesSM ? "center" : undefined} variant="body1">
+                    <Typography align={matchesSM ? "center" : "justify"} variant="body1">
                         Draw people in with a dazzling website. Showing off your products
                         online is a great way to help customers decide what’s right for them
                         before visiting in person.
@@ -225,54 +198,33 @@ const Websites = ({ setValue, setSelectedIndex }) => {
                 direction={matchesSM ? "column" : "row"}
                 alignItems="center"
                 justify="flex-end"
-                className={classes.rowContainer}
-                style={{ marginTop: "15em", marginBottom: "15em" }}
+                className={commonClasses.rowContainer}
+                style={{marginTop: "15em", marginBottom: "15em"}}
             >
                 <Grid item>
                     <Grid container direction="column">
                         <Grid item>
                             <Typography align="center" variant="h4" gutterBottom>
                                 Search Engine
-                                <br />
+                                <br/>
                                 Optimization
                             </Typography>
                         </Grid>
                         <Grid item>
-                            <img src="assets/seo.svg" alt="website standing on winner's podium" />
+                            <img src={seo} alt="website standing on winner's podium"/>
                         </Grid>
                     </Grid>
                 </Grid>
                 <Grid
                     item
-                    style={{ marginLeft: matchesSM ? 0 : "1em" }}
+                    style={{marginLeft: matchesSM ? 0 : "1em"}}
                     className={classes.paragraphContainer}
                 >
-                    <Typography
-                        align={matchesSM ? "center" : undefined}
-                        variant="body1"
-                        paragraph
-                    >
-                        How often have you ever been to the second page of Google results?
-                    </Typography>
-                    <Typography
-                        align={matchesSM ? "center" : undefined}
-                        variant="body1"
-                        paragraph
-                    >
-                        If you’re like us, probably never.
-                    </Typography>
-                    <Typography
-                        align={matchesSM ? "center" : undefined}
-                        variant="body1"
-                        paragraph
-                    >
-                        Customers don’t go there either, so we make sure your website is
-                        designed to end up on top.
-                    </Typography>
+                    <Paragraph paragraphs={seoParagraphs} align={matchesSM ? "center" : "justify"}/>
                 </Grid>
             </Grid>
             <Grid item>
-                <CallToAction setValue={setValue} />
+                <CallToAction setValue={setValue}/>
             </Grid>
         </Grid>
     );

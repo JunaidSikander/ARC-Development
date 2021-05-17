@@ -1,50 +1,15 @@
 import React from 'react';
 import {Link} from "react-router-dom";
-import ButtonArrow from "./ui/ButtonArrow";
+import {ButtonArrow} from "components";
+import { mobileIcon, customSoftwareIcon, websiteIcon } from "assets"
+import {commonStyle, servicesStyle} from "styles"
 //Material UI Components
-import {makeStyles, useMediaQuery, useTheme} from "@material-ui/core";
-import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
-
-
-const useStyles = makeStyles(theme => ({
-    root: {
-        padding: 0,
-        margin: 0
-    },
-    specialText: {
-        fontFamily: 'Pacifico',
-        color: theme.palette.common.orange
-    },
-    subtitle: {
-        marginBottom: '1rem'
-    },
-    icon: {
-        marginLeft: '2em',
-        [theme.breakpoints.down('xs')]: {
-            marginLeft: 0
-        }
-    },
-    serviceContainer: {
-        marginTop: '10em',
-        [theme.breakpoints.down('sm')]: {
-            padding: 25
-        }
-    },
-    learnButton: {
-        ...theme.typography.learnButton,
-        fontSize: '0.7rem',
-        height: 35,
-        padding: 5,
-        [theme.breakpoints.down('sm')]: {
-            marginBottom: '2em'
-        }
-    },
-}));
+import {Button, Grid, Typography, useMediaQuery} from "@material-ui/core"
+import {makeStyles, useTheme} from "@material-ui/styles";
 
 const Services = ({setValue, setSelectedIndex}) => {
-    const classes = useStyles();
+    const classes = servicesStyle();
+    const commonClasses = commonStyle();
     const theme = useTheme();
     const matchesSM = useMediaQuery(theme.breakpoints.down('sm'));
 
@@ -60,7 +25,7 @@ const Services = ({setValue, setSelectedIndex}) => {
         <Grid item> { /*----- iOS/Android  Block -----*/}
             <Grid container
                   justify={matchesSM ? "center" : 'flex-end'}
-                  className={classes.serviceContainer}
+                  className={commonClasses.serviceContainer}
                   style={{marginTop: matchesSM ? '1em' : '5em'}}
             >
                 <Grid item
@@ -79,7 +44,7 @@ const Services = ({setValue, setSelectedIndex}) => {
                         {matchesSM ? null : <br/>} with either mobile platform.
                     </Typography>
                     <Button variant='outlined'
-                            className={classes.learnButton}
+                            className={commonClasses.learnButton}
                             onClick={() => {
                                 setValue(1);
                                 setSelectedIndex(2)
@@ -94,13 +59,13 @@ const Services = ({setValue, setSelectedIndex}) => {
                 <Grid item style={{marginRight: matchesSM ? 0 : '5em',}}>
                     <img className={classes.icon}
                          alt='mobile phone icon'
-                         src='/assets/mobileIcon.svg'
+                         src={mobileIcon}
                          width='250em'/>
                 </Grid>
             </Grid>
         </Grid>
         <Grid item> { /*----- Custom Software Block -----*/}
-            <Grid container justify={matchesSM ? "center" : undefined} className={classes.serviceContainer}>
+            <Grid container justify={matchesSM ? "center" : undefined} className={commonClasses.serviceContainer}>
                 <Grid item
                       style={{
                           marginLeft: matchesSM ? 0 : '5em',
@@ -114,10 +79,10 @@ const Services = ({setValue, setSelectedIndex}) => {
                     </Typography>
                     <Typography variant='subtitle1'>
                         Complete digital solutions, from investigation to
-                        <span className={classes.specialText}> celebration.</span>
+                        <span className={commonClasses.specialText}> celebration.</span>
                     </Typography>
                     <Button variant='outlined'
-                            className={classes.learnButton}
+                            className={commonClasses.learnButton}
                             component={Link}
                             onClick={() => {
                                 setValue(1);
@@ -129,14 +94,14 @@ const Services = ({setValue, setSelectedIndex}) => {
                     </Button>
                 </Grid>
                 <Grid item>
-                    <img className={classes.icon} alt='custom software icon' src='/assets/customSoftwareIcon.svg'/>
+                    <img className={classes.icon} alt='custom software icon' src={customSoftwareIcon}/>
                 </Grid>
             </Grid>
         </Grid>
         <Grid item> { /*----- Website Block -----*/}
             <Grid container
                   justify={matchesSM ? "center" : 'flex-end'}
-                  className={classes.serviceContainer}
+                  className={commonClasses.serviceContainer}
                   style={{marginBottom: '10em'}}
             >
                 <Grid item
@@ -154,7 +119,7 @@ const Services = ({setValue, setSelectedIndex}) => {
                         Optimized for Search Engines, built for speed
                     </Typography>
                     <Button variant='outlined'
-                            className={classes.learnButton}
+                            className={commonClasses.learnButton}
                             component={Link}
                             onClick={() => {
                                 setValue(1);
@@ -169,7 +134,7 @@ const Services = ({setValue, setSelectedIndex}) => {
                 <Grid item style={{marginRight: matchesSM ? 0 : '5em',}}>
                     <img className={classes.icon}
                          alt='website icon'
-                         src='/assets/websiteIcon.svg'
+                         src={websiteIcon}
                          width='250em'
                     />
                 </Grid>

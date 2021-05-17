@@ -1,68 +1,50 @@
-import React, {Fragment, useState} from 'react';
+import React, {useState} from 'react';
 import Lottie from 'react-lottie';
-import { cloneDeep } from 'lodash'
-//Material UI Components
-import {CircularProgress, Snackbar, Grid, Hidden, Typography,Button, IconButton, Dialog, DialogContent, TextField } from "@material-ui/core";
-import {makeStyles, useTheme} from "@material-ui/styles";
-
-import check from "../assets/check.svg";
-import send from "../assets/send.svg";
-import software from "../assets/software.svg";
-import mobile from "../assets/mobile.svg";
-import website from "../assets/website.svg";
-import backArrow from "../assets/backArrow.svg";
-import backArrowDisabled from "../assets/backArrowDisabled.svg";
-import forwardArrow from "../assets/forwardArrow.svg";
-import forwardArrowDisabled from "../assets/forwardArrowDisabled.svg";
-import camera from "../assets/camera.svg";
-import upload from "../assets/upload.svg";
-import person from "../assets/person.svg";
-import persons from "../assets/persons.svg";
-import info from "../assets/info.svg";
-import bell from "../assets/bell.svg";
-import people from "../assets/people.svg";
-import usersIcon from "../assets/users.svg";
-import iPhone from "../assets/iphone.svg";
-import gps from "../assets/gps.svg";
-import customized from "../assets/customized.svg";
-import data from "../assets/data.svg";
-import android from "../assets/android.svg";
-import globe from "../assets/globe.svg";
-import biometrics from "../assets/biometrics.svg";
-import estimateAnimation from "../animations/estimateAnimation/data.json";
-import useMediaQuery from "@material-ui/core/useMediaQuery/useMediaQuery";
+import {cloneDeep} from 'lodash';
 import emailjs from "emailjs-com";
-
-
-const useStyles = makeStyles(theme => ({
-    icon: {
-        width: '12em',
-        height: '10em'
-    },
-    estimateButton: {
-        ...theme.typography.estimate,
-        borderRadius: 50,
-        backgroundColor: theme.palette.common.orange,
-        height: 50,
-        width: 225,
-        fontSize: '1.25rem',
-        marginTop: '5em',
-        '&:hover': {
-            backgroundColor: theme.palette.secondary.light
-        }
-    },
-    message: {
-        border: `2px solid ${theme.palette.common.blue}`,
-        marginTop: '5em',
-        borderRadius: 5
-    },
-    specialText: {
-        fontFamily: "Raleway",
-        fontWeight: 700,
-        fontSize: "2rem",
-        color: theme.palette.common.orange
-    }
-}));
+import {estimateStyle} from "styles"
+import {
+    airplane,
+    android,
+    backArrow,
+    backArrowDisabled,
+    bell,
+    biometrics,
+    camera,
+    check,
+    customized,
+    data,
+    forwardArrow,
+    forwardArrowDisabled,
+    globe,
+    gps,
+    info,
+    iPhone,
+    mobile,
+    people,
+    person,
+    persons,
+    software,
+    upload,
+    usersIcon,
+    website
+} from 'assets'
+import {estimateAnimation} from 'animations'
+//Material UI Components
+import {
+    Button,
+    CircularProgress,
+    Dialog,
+    DialogContent,
+    Grid,
+    Hidden,
+    IconButton,
+    Snackbar,
+    TextField,
+    Typography,
+    useMediaQuery
+} from "@material-ui/core";
+import {useTheme} from "@material-ui/styles";
 
 const defaultQuestions = [
     {
@@ -386,7 +368,7 @@ const websiteQuestions = [
 ];
 
 const Estimate = () => {
-    const classes = useStyles();
+    const classes = estimateStyle();
     const theme = useTheme();
     const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
     const matchesMD = useMediaQuery(theme.breakpoints.down("md"));
@@ -403,7 +385,7 @@ const Estimate = () => {
     const [users, setUsers] = useState("");
     const [category, setCategory] = useState("");
 
-    const [alert, setAlert] = useState({ open: false, color: "" });
+    const [alert, setAlert] = useState({open: false, color: ""});
     const [alertMessage, setAlertMesssage] = useState("");
 
     const [loading, setLoading] = useState(false);
@@ -424,8 +406,8 @@ const Estimate = () => {
         const activeIndex = currentlyActive[0].id - 1;
         const nextIndex = activeIndex + 1;
 
-        newQuestions[activeIndex] = { ...currentlyActive[0], active: false };
-        newQuestions[nextIndex] = { ...newQuestions[nextIndex], active: true };
+        newQuestions[activeIndex] = {...currentlyActive[0], active: false};
+        newQuestions[nextIndex] = {...newQuestions[nextIndex], active: true};
 
         setQuestions(newQuestions);
 
@@ -438,8 +420,8 @@ const Estimate = () => {
         const activeIndex = currentlyActive[0].id - 1;
         const nextIndex = activeIndex - 1;
 
-        newQuestions[activeIndex] = { ...currentlyActive[0], active: false };
-        newQuestions[nextIndex] = { ...newQuestions[nextIndex], active: true };
+        newQuestions[activeIndex] = {...currentlyActive[0], active: false};
+        newQuestions[nextIndex] = {...newQuestions[nextIndex], active: true};
 
         setQuestions(newQuestions);
 
@@ -490,16 +472,16 @@ const Estimate = () => {
         const newSelected = newQuestions[activeIndex].options[id - 1];
         const previousSelected = currentlyActive[0].options.filter(option => option.selected);
 
-        switch(currentlyActive[0].subtitle){
+        switch (currentlyActive[0].subtitle) {
             case "Select one.":
-                if(previousSelected[0]) previousSelected[0].selected = !previousSelected[0].selected;
+                if (previousSelected[0]) previousSelected[0].selected = !previousSelected[0].selected;
                 newSelected.selected = !newSelected.selected;
                 break;
             default:
                 newSelected.selected = !newSelected.selected;
                 break;
         }
-        switch(newSelected.title){
+        switch (newSelected.title) {
             case 'Custom Software Development':
                 setQuestions(softwareQuestions);
                 break;
@@ -651,13 +633,13 @@ const Estimate = () => {
             process.env.REACT_APP_USER_ID)
             .then((response) => {
                 setLoading(false);
-                setAlert({ open: true, color: "#4BB543" });
+                setAlert({open: true, color: "#4BB543"});
                 setAlertMesssage("Message sent successfully!");
                 setDialogOpen(false);
             })
             .catch((error) => {
                 setLoading(false);
-                setAlert({ open: true, color: "#FF3232" });
+                setAlert({open: true, color: "#FF3232"});
                 setAlertMesssage("Something went wrong! Please try again.");
                 console.error(error);
             })
@@ -669,10 +651,10 @@ const Estimate = () => {
                 item
                 container
                 alignItems="center"
-                style={{ marginBottom: "1.25em" }}
+                style={{marginBottom: "1.25em"}}
             >
                 <Grid item xs={2}>
-                    <img src={check} alt="checkmark" />
+                    <img src={check} alt="checkmark"/>
                 </Grid>
                 <Grid item xs={10}>
                     <Typography variant="body1">
@@ -711,10 +693,10 @@ const Estimate = () => {
                 item
                 container
                 alignItems="center"
-                style={{ marginBottom: "1.25em" }}
+                style={{marginBottom: "1.25em"}}
             >
                 <Grid item xs={2}>
-                    <img src={check} alt="checkmark" />
+                    <img src={check} alt="checkmark"/>
                 </Grid>
                 <Grid item xs={10}>
                     <Typography variant="body1">
@@ -749,7 +731,7 @@ const Estimate = () => {
             </Grid>
             <Grid item container alignItems="center">
                 <Grid item xs={2}>
-                    <img src={check} alt="checkmark" />
+                    <img src={check} alt="checkmark"/>
                 </Grid>
                 <Grid item xs={10}>
                     <Typography variant="body1">
@@ -761,10 +743,10 @@ const Estimate = () => {
     );
 
     const websiteSelections = (
-        <Grid container direction="column" style={{ marginTop: "14em" }}>
+        <Grid container direction="column" style={{marginTop: "14em"}}>
             <Grid item container alignItems="center">
                 <Grid item xs={2}>
-                    <img src={check} alt="checkmark" />
+                    <img src={check} alt="checkmark"/>
                 </Grid>
                 <Grid item xs={10}>
                     <Typography variant="body1">
@@ -789,7 +771,7 @@ const Estimate = () => {
             >
                 <Grid
                     item
-                    style={{ marginTop: "2em", marginLeft: matchesMD ? 0 : "5em" }}
+                    style={{marginTop: "2em", marginLeft: matchesMD ? 0 : "5em"}}
                 >
                     <Typography variant="h2" align={matchesMD ? "center" : undefined}>
                         Estimate
@@ -817,7 +799,7 @@ const Estimate = () => {
                 direction="column"
                 alignItems="center"
                 lg
-                style={{ marginRight: matchesMD ? 0 : "2em", marginBottom: "25em" }}
+                style={{marginRight: matchesMD ? 0 : "2em", marginBottom: "25em"}}
             >
                 {questions
                     .filter(question => question.active)
@@ -841,7 +823,7 @@ const Estimate = () => {
                                 <Typography
                                     variant="body1"
                                     align="center"
-                                    style={{ marginBottom: "2.5em" }}
+                                    style={{marginBottom: "2.5em"}}
                                     gutterBottom
                                 >
                                     {question.subtitle}
@@ -868,7 +850,7 @@ const Estimate = () => {
                                         alignItems="center"
                                         md
                                     >
-                                        <Grid item style={{ maxWidth: "14em" }}>
+                                        <Grid item style={{maxWidth: "14em"}}>
                                             <Typography
                                                 align="center"
                                                 variant="h6"
@@ -899,7 +881,7 @@ const Estimate = () => {
                     item
                     container
                     justify="space-between"
-                    style={{ width: "18em", marginTop: "3em" }}
+                    style={{width: "18em", marginTop: "3em"}}
                 >
                     <Grid item>
                         <IconButton
@@ -949,11 +931,11 @@ const Estimate = () => {
                 onClose={() => setDialogOpen(false)}
                 fullWidth
                 maxWidth="lg"
-                style={{ zIndex: 1302 }}
+                style={{zIndex: 1302}}
                 fullScreen={matchesSM}
             >
                 <Grid container justify="center">
-                    <Grid item style={{ marginTop: "1em" }}>
+                    <Grid item style={{marginTop: "1em"}}>
                         <Typography variant="h2" align="center">
                             Estimate
                         </Typography>
@@ -971,7 +953,7 @@ const Estimate = () => {
                             container
                             direction="column"
                             md={7}
-                            style={{ maxWidth: "20em" }}
+                            style={{maxWidth: "20em"}}
                         >
                             <Grid item style={{marginBottom: '0.5em'}}>
                                 <TextField id='name' fullWidth label='Name' value={inputFields.name}
@@ -988,7 +970,8 @@ const Estimate = () => {
                                            onChange={handleChange}/>
                             </Grid>
                             <Grid item>
-                                <TextField InputProps={{disableUnderline: true}} className={classes.message} id='message'
+                                <TextField InputProps={{disableUnderline: true}} className={classes.message}
+                                           id='message'
                                            multiline fullWidth rows={10} value={inputFields.message}
                                            onChange={handleChange}/>
                             </Grid>
@@ -997,7 +980,7 @@ const Estimate = () => {
                                     variant="body1"
                                     paragraph
                                     align={matchesSM ? "center" : undefined}
-                                    style={{ lineHeight: 1.1 }}
+                                    style={{lineHeight: 1.1}}
                                 >
                                     We can create this digital solution for an estimated{" "}
                                     <span className={classes.specialText}>
@@ -1020,7 +1003,7 @@ const Estimate = () => {
                             container
                             direction="column"
                             md={5}
-                            style={{ maxWidth: "30em" }}
+                            style={{maxWidth: "30em"}}
                             alignItems={matchesSM ? "center" : undefined}
                         >
                             <Hidden smDown>
@@ -1041,23 +1024,23 @@ const Estimate = () => {
                                         validHelperText.email.length !== 0 ||
                                         validHelperText.phone.length !== 0}>
                                     {loading ? (
-                                        <CircularProgress />
+                                        <CircularProgress/>
                                     ) : (
                                         <React.Fragment>
                                             Place Request
                                             <img
-                                                src={send}
+                                                src={airplane}
                                                 alt="paper airplane"
-                                                style={{ marginLeft: "0.5em" }}
+                                                style={{marginLeft: "0.5em"}}
                                             />
                                         </React.Fragment>
                                     )}
                                 </Button>
                             </Grid>
                             <Hidden mdUp>
-                                <Grid item style={{ marginBottom: matchesSM ? "5em" : 0 }}>
+                                <Grid item style={{marginBottom: matchesSM ? "5em" : 0}}>
                                     <Button
-                                        style={{ fontWeight: 300 }}
+                                        style={{fontWeight: 300}}
                                         color="primary"
                                         onClick={() => setDialogOpen(false)}
                                     >
@@ -1076,7 +1059,7 @@ const Estimate = () => {
                         backgroundColor: alert.color
                     }
                 }}
-                anchorOrigin={{ vertical: "top", horizontal: "center" }}
+                anchorOrigin={{vertical: "top", horizontal: "center"}}
                 message={alertMessage}
                 autoHideDuration={4000}
                 onClose={() => setAlert(false)}

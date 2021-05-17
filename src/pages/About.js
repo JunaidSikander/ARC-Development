@@ -1,45 +1,15 @@
 import React from 'react';
+import {founder, history, puppy, yearbook} from "assets";
+import {CallToAction} from "components";
+import {aboutStyle, commonStyle} from "styles"
 //Material UI Components
-import {Avatar, Grid, Hidden, makeStyles, Typography, useMediaQuery} from "@material-ui/core";
-import CallToAction from "./ui/CallToAction";
 import {useTheme} from "@material-ui/styles";
-//Svg Icons
-import history from "../assets/history.svg";
-import profile from "../assets/founder.jpg";
-import yearbook from "../assets/yearbook.svg";
-import puppy from "../assets/puppy.svg";
+import {Avatar, Grid, Hidden, Typography, useMediaQuery} from "@material-ui/core";
 
-
-const useStyles = makeStyles(theme => ({
-    missionStatement: {
-        fontStyle: "italic",
-        fontWeight: 300,
-        fontSize: "1.5rem",
-        maxWidth: "50em",
-        lineHeight: 1.4
-    },
-    rowContainer: {
-        paddingLeft: "5em",
-        paddingRight: "5em",
-        [theme.breakpoints.down("sm")]: {
-            paddingLeft: "1.5em",
-            paddingRight: "1.5em"
-        }
-    },
-    avatar: {
-        height: "25em",
-        width: "25em",
-        [theme.breakpoints.down("sm")]: {
-            height: "20em",
-            width: "20em",
-            maxHeight: 300,
-            maxWidth: 300
-        }
-    }
-}));
 
 const About = ({setValue}) => {
-    const classes = useStyles();
+    const classes = aboutStyle();
+    const commonClasses = commonStyle();
     const theme = useTheme();
     const matchesMD = useMediaQuery(theme.breakpoints.down("md"));
 
@@ -47,9 +17,8 @@ const About = ({setValue}) => {
         <Grid container direction="column">
             <Grid
                 item
-                className={classes.rowContainer}
-                style={{marginTop: matchesMD ? "1em" : "2em"}}
-            >
+                className={commonClasses.rowContainer}
+                style={{marginTop: matchesMD ? "1em" : "2em"}}>
                 <Typography align={matchesMD ? "center" : undefined} variant="h2">
                     About Us
                 </Typography>
@@ -58,14 +27,12 @@ const About = ({setValue}) => {
                 item
                 container
                 justify="center"
-                className={classes.rowContainer}
-                style={{marginTop: "3em"}}
-            >
+                className={commonClasses.rowContainer}
+                style={{marginTop: "3em"}}>
                 <Typography
                     variant="h4"
                     align="center"
-                    className={classes.missionStatement}
-                >
+                    className={classes.missionStatement}>
                     Whether it be person to person, business to consumer, or an individual
                     to their interests, technology is meant to bring us closer to what we
                     care about in the best way possible. Arc Development will use that
@@ -76,26 +43,23 @@ const About = ({setValue}) => {
             <Grid
                 item
                 container
-                className={classes.rowContainer}
+                className={commonClasses.rowContainer}
                 style={{marginTop: "10em", marginBottom: "10em"}}
                 direction={matchesMD ? "column" : "row"}
                 alignItems={matchesMD ? "center" : undefined}
-                justify="space-between"
-            >
+                justify="space-between">
                 <Grid item>
                     <Grid
                         item
                         container
                         direction="column"
                         lg
-                        style={{maxWidth: "35em"}}
-                    >
+                        style={{maxWidth: "35em"}}>
                         <Grid item>
                             <Typography
                                 align={matchesMD ? "center" : undefined}
                                 variant="h4"
-                                gutterBottom
-                            >
+                                gutterBottom>
                                 History
                             </Typography>
                         </Grid>
@@ -104,23 +68,20 @@ const About = ({setValue}) => {
                                 variant="body1"
                                 align={matchesMD ? "center" : undefined}
                                 paragraph
-                                style={{fontWeight: 700, fontStyle: "italic"}}
-                            >
+                                style={{fontWeight: 700, fontStyle: "italic"}}>
                                 We're the new kid on the block
                             </Typography>
                             <Typography
                                 variant="body1"
                                 align={matchesMD ? "center" : undefined}
-                                paragraph
-                            >
+                                paragraph>
                                 Founded in 2019, we’re ready to get our hands on the world’s
                                 business problems.
                             </Typography>
                             <Typography
                                 variant="body1"
                                 align={matchesMD ? "center" : undefined}
-                                paragraph
-                            >
+                                paragraph>
                                 It all started with one question: Why aren’t all businesses
                                 using available technology? There are many different answers to
                                 that question: economic barriers, social barriers, educational
@@ -165,7 +126,7 @@ const About = ({setValue}) => {
                 container
                 direction="column"
                 alignItems="center"
-                className={classes.rowContainer}
+                className={commonClasses.rowContainer}
                 style={{marginBottom: "15em"}}
             >
                 <Grid item>
@@ -182,7 +143,7 @@ const About = ({setValue}) => {
                     </Typography>
                 </Grid>
                 <Grid item>
-                    <Avatar alt="founder" src={profile} className={classes.avatar}/>
+                    <Avatar alt="founder" src={founder} className={classes.avatar}/>
                 </Grid>
                 <Grid item container justify={matchesMD ? "center" : undefined}>
                     <Hidden lgUp>

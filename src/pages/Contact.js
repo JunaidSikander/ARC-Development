@@ -1,79 +1,26 @@
 import React, {useState} from 'react';
 import {Link} from 'react-router-dom';
 import emailjs from 'emailjs-com';
+import {airplane, emailIcon, phoneIcon} from 'assets';
+import {ButtonArrow} from "components";
+import {commonStyle, contactStyle} from "styles"
 //Material UI Components
-import {Button, CircularProgress, Dialog, DialogContent, Grid, makeStyles, Snackbar, TextField, Typography, useTheme} from "@material-ui/core";
-//SVG icons
-import background from '../assets/background.jpg';
-import mobileBackground from '../assets/mobileBackground.jpg';
-import phoneIcon from '../assets/phone.svg';
-import emailIcon from '../assets/email.svg';
-import airplane from '../assets/send.svg'
-import ButtonArrow from "./ui/ButtonArrow";
-import useMediaQuery from "@material-ui/core/useMediaQuery/useMediaQuery";
-
-const useStyles = makeStyles(theme => ({
-    background: {
-        backgroundImage: `url(${background})`,
-        [theme.breakpoints.down('md')]: {
-            backgroundImage: `url(${mobileBackground})`,
-        },
-        backgroundPosition: 'center',
-        backgroundSize: 'cover',
-        backgroundRepeat: 'no-repeat',
-        height: '60em',
-        paddingBottom: '10em'
-    },
-    estimateButton: {
-        ...theme.typography.estimate,
-        borderRadius: 50,
-        height: 80,
-        width: 205,
-        backgroundColor: theme.palette.common.orange,
-        fontSize: '1.5rem',
-        marginRight: '5em',
-        marginLeft: '2em',
-        [theme.breakpoints.down('md')]: {
-            marginRight: 0,
-            marginLeft: 0,
-        },
-        '&:hover': {
-            backgroundColor: theme.palette.secondary.light
-        }
-    },
-    learnButton: {
-        ...theme.typography.learnButton,
-        fontSize: '0.7rem',
-        height: 35,
-        padding: 5,
-        [theme.breakpoints.down('md')]: {
-            marginBottom: '2em'
-        },
-    },
-    message: {
-        border: `2px solid ${theme.palette.common.blue}`,
-        marginTop: '5em',
-        borderRadius: 5
-    },
-    sendButton: {
-        ...theme.typography.estimate,
-        borderRadius: 50,
-        height: 45,
-        width: 245,
-        fontSize: '1rem',
-        backgroundColor: theme.palette.common.orange,
-        "&:hover": {
-            backgroundColor: theme.palette.secondary.light
-        },
-        [theme.breakpoints.down('md')]: {
-            height: 40,
-            width: 225
-        }
-    }
-}));
+import {
+    Button,
+    CircularProgress,
+    Dialog,
+    DialogContent,
+    Grid,
+    Snackbar,
+    TextField,
+    Typography,
+    useMediaQuery,
+} from "@material-ui/core";
+import {useTheme} from "@material-ui/styles";
 
 const Contact = ({setValue}) => {
-    const classes = useStyles();
+    const classes = contactStyle();
+    const commonClasses = commonStyle();
     const theme = useTheme();
 
     const matchesXS = useMediaQuery(theme.breakpoints.down('xs'));
@@ -84,7 +31,7 @@ const Contact = ({setValue}) => {
     const [validHelperText, setValidHelperText] = useState({email: '', phone: ''});
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);
-    const [alert,setAlert] = useState({ open: false, message: '', backgroundColor: '' });
+    const [alert, setAlert] = useState({open: false, message: '', backgroundColor: ''});
 
     //Handle Change Method with Validation
     const handleChange = (event) => {
@@ -209,7 +156,7 @@ const Contact = ({setValue}) => {
                             </Grid>
                         </Grid>
                         <Grid item style={{maxWidth: matchesXS ? '100%' : '20em'}}>
-                            <TextField InputProps={{disableUnderline: true}} className={classes.message} id='message'
+                            <TextField InputProps={{disableUnderline: true}} className={commonClasses.message} id='message'
                                        multiline fullWidth rows={10} value={inputFields.message}
                                        onChange={handleChange}/>
                         </Grid>
@@ -258,7 +205,7 @@ const Contact = ({setValue}) => {
                                            onChange={handleChange}/>
                             </Grid>
                             <Grid item style={{maxWidth: '20em'}}>
-                                <TextField InputProps={{disableUnderline: true}} className={classes.message}
+                                <TextField InputProps={{disableUnderline: true}} className={commonClasses.message}
                                            id='message'
                                            multiline fullWidth rows={10} value={inputFields.message}
                                            onChange={handleChange}/>
@@ -289,14 +236,14 @@ const Contact = ({setValue}) => {
                 </DialogContent>
             </Dialog>
             <Snackbar open={alert.open} message={alert.message}
-                      ContentProps={{ style: {backgroundColor: alert.backgroundColor} }}
-                      anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+                      ContentProps={{style: {backgroundColor: alert.backgroundColor}}}
+                      anchorOrigin={{vertical: 'top', horizontal: 'center'}}
                       onClose={() => setAlert({...alert, open: false})}
                       autoHideDuration={4000}
             />
             <Grid item container direction={matchesMD ? 'column' : 'row'}
                   justify={matchesMD ? 'center' : undefined}
-                  className={classes.background} alignItems='center' lg={8} xl={9}>
+                  className={commonClasses.background} alignItems='center' lg={8} xl={9}>
                 <Grid item style={{marginLeft: matchesMD ? 0 : '3em', textAlign: matchesMD ? 'center' : 'inherit'}}>
                     <Grid container direction='column'>
                         <Grid item>
@@ -308,9 +255,8 @@ const Contact = ({setValue}) => {
                                 Take advantage of 21st Century
                             </Typography>
                             <Grid container item
-                                  justify={matchesMD ? 'center' : undefined}
-                            >
-                                <Button variant='outlined' className={classes.learnButton} component={Link}
+                                  justify={matchesMD ? 'center' : undefined}>
+                                <Button variant='outlined' className={commonClasses.learnButton} component={Link}
                                         onClick={() => setValue(2)} to='/revolution'>
                                     <span style={{marginRight: 5}}> Learn More </span>
                                     <ButtonArrow width={10} height={10} fill={theme.palette.common.blue}/>
@@ -321,8 +267,7 @@ const Contact = ({setValue}) => {
                 </Grid>
                 <Grid item>
                     <Button variant='contained' className={classes.estimateButton} component={Link}
-                            onClick={() => setValue(5)} to='/estimate'
-                    >Free Estimate</Button>
+                            onClick={() => setValue(5)} to='/estimate'>Free Estimate</Button>
                 </Grid>
             </Grid>
         </Grid>
